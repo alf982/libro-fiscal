@@ -1,0 +1,8 @@
+version: 1.0.0
+files:
+  - url: Libro-Fiscal-SENIAT-Setup-1.0.0.exe
+    sha512: DDB7+CZlkQklevmp64JeorvnUzyZICnYT81ftK6QgxO3Kr5KU24nuNgWddoVNV1pnVeJ6TMsVZBz9TcnVr/J5Q==
+    size: 102293827
+path: Libro-Fiscal-SENIAT-Setup-1.0.0.exe
+sha512: DDB7+CZlkQklevmp64JeorvnUzyZICnYT81ftK6QgxO3Kr5KU24nuNgWddoVNV1pnVeJ6TMsVZBz9TcnVr/J5Q==
+releaseDate: '2026-06-15T19:42:10.077Z'
