@@ -1,0 +1,872 @@
+/* Estilos adicionales específicos para Venezuela */
+.fiscal-rates-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    background-color: rgba(255, 255, 255, 0.01);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+.fiscal-rates-table th, .fiscal-rates-table td {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.fiscal-rates-table th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: left;
+}
+.retention-box {
+    display: none;
+    background-color: var(--color-primary-glow);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 16px;
+    margin-top: 12px;
+    animation: slideDown 0.25s ease;
+}
+.retention-box.active {
+    display: block;
+}
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Estilos de la Forma 30 del SENIAT */
+.seniat-form-layout {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    padding: 24px;
+    font-family: Arial, sans-serif;
+    border-radius: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+.seniat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px double #000;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+.seniat-title-box {
+    text-align: center;
+    flex-grow: 1;
+}
+.seniat-title-box h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 2px 0;
+    text-transform: uppercase;
+}
+.seniat-title-box h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 2px 0;
+}
+.seniat-meta-info {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    border: 1px solid #000;
+    margin-bottom: 16px;
+    font-size: 0.8rem;
+}
+.seniat-meta-info > div {
+    padding: 8px 12px;
+}
+.seniat-meta-info > div:first-child {
+    border-right: 1px solid #000;
+}
+.seniat-section-header {
+    background-color: #f1f5f9;
+    font-weight: bold;
+    padding: 6px 10px;
+    border: 1px solid #000;
+    margin-top: 12px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+.seniat-grid {
+    display: grid;
+    grid-template-columns: auto 80px 140px 140px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.seniat-grid-header {
+    background-color: #f8fafc;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    display: contents;
+}
+.seniat-row {
+    display: contents;
+    font-size: 0.75rem;
+}
+.seniat-cell {
+    padding: 5px 8px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+}
+.seniat-cell.num {
+    justify-content: flex-end;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+}
+.seniat-cell.border-r {
+    border-right: 1px solid #000;
+}
+.seniat-row:last-child .seniat-cell {
+    border-bottom: 1px solid #000;
+}
+.seniat-total-row {
+    display: contents;
+    font-weight: bold;
+}
+.seniat-total-row .seniat-cell {
+    background-color: #f8fafc;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.seniat-total-row .seniat-cell.num {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+}
+.casilla-badge {
+    background-color: #000;
+    color: #fff;
+    padding: 1px 4px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    margin-right: 6px;
+    border-radius: 0;
+    display: inline-block;
+    width: 22px;
+    text-align: center;
+}
+.barcode-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+.barcode-lines {
+    display: flex;
+    height: 30px;
+    align-items: stretch;
+    background: #000;
+    padding: 1px;
+}
+.barcode-bar {
+    background: #fff;
+    margin-right: 1px;
+    height: 100%;
+}
+.print-footer-seals {
+    display: none;
+}
+@media print {
+    .seniat-form-layout {
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+        padding: 10px !important;
+    }
+    .seniat-cell {
+        border-bottom: 1px solid #000 !important;
+    }
+    .print-footer-seals {
+        display: flex !important;
+        justify-content: space-between;
+        margin-top: 40px;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+    .print-seal-box {
+        border: 1px dashed #000;
+        width: 200px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+    }
+}
+
+/* Exact Venezuelan Forma 30 Carbon Copy Styles */
+.seniat-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+    margin-bottom: 0px;
+    font-family: Arial, sans-serif;
+    color: #000;
+}
+.seniat-header-left {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 0.55rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+.seniat-country {
+    font-size: 0.6rem;
+    margin-bottom: 2px;
+}
+.seniat-logo-img-box {
+    height: 30px;
+    margin: 2px 0;
+    display: flex;
+    align-items: center;
+}
+.seniat-logo-img-box img {
+    height: 100%;
+    object-fit: contain;
+}
+.seniat-subtext {
+    font-size: 0.5rem;
+    color: #000;
+    margin-top: 1px;
+}
+.seniat-header-middle {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.forma-iva-title {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-bottom: 4px;
+}
+.declaracion-title {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.seniat-header-right {
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+.periodo-table {
+    border-collapse: collapse;
+    border: 2px solid #000;
+    font-size: 0.65rem;
+    text-align: center;
+    width: 130px;
+    background-color: #fff;
+}
+.periodo-table th, .periodo-table td {
+    border: 1px solid #000;
+    padding: 2px;
+}
+.periodo-table th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+    color: #000;
+}
+.periodo-table td {
+    height: 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: #000;
+}
+.sustitutiva-row {
+    display: flex;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    font-size: 0.65rem;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+}
+.sustitutiva-left {
+    width: 80%;
+    padding: 6px 8px;
+    border-right: 2px solid #000;
+    display: flex;
+    align-items: center;
+}
+.sustitutiva-right {
+    width: 20%;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.empty-box-fecha {
+    border: 1px solid #000;
+    width: 70px;
+    height: 18px;
+    background-color: #fff;
+}
+.datos-seccion-titulo {
+    background-color: #cbd5e1; /* Gris medio para las secciones como en el PDF */
+    color: #000;
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    font-family: Arial, sans-serif;
+}
+.datos-contribuyente-row {
+    display: flex;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    font-size: 0.75rem;
+    background-color: #fff;
+    color: #000;
+}
+.contribuyente-nombre-box {
+    width: 80%;
+    padding: 8px;
+    border-right: 2px solid #000;
+    font-weight: bold;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+    text-transform: uppercase;
+}
+.contribuyente-rif-nit-box {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.rif-nit-line {
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+}
+.rif-nit-line:first-child {
+    border-bottom: 1px solid #000;
+}
+
+/* --- LIBRO DE INVENTARIO Y BALANCES (SENIAT VENEZUELA) --- */
+
+/* Screen style for the paper-like ledger */
+#balance-bloque-visor {
+    font-family: 'Outfit', 'Georgia', serif;
+    background-color: #faf9f6 !important; /* Cream color */
+    color: #1a1a1a !important;
+    border: 3px double #8c7853 !important; /* Elegant double bronze/brown border */
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    position: relative;
+    padding: 40px !important;
+    max-width: 1000px;
+    margin: 20px auto !important;
+}
+
+/* Watermark/stamp for official look on screen */
+#balance-bloque-visor::before {
+    content: "REGISTRO MERCANTIL";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(140, 120, 83, 0.04);
+    pointer-events: none;
+    z-index: 1;
+    white-space: nowrap;
+    letter-spacing: 10px;
+}
+
+/* Header styling */
+.seniat-header-container {
+    border-bottom: 2px solid #1a1a1a !important;
+    font-family: 'Outfit', 'Arial', sans-serif !important;
+}
+
+/* 3-Column Amount Ledger Tables */
+#tabla-cuerpo-inventario-3col, 
+#tabla-cuerpo-general-3col, 
+#tabla-cuerpo-resultados-3col {
+    border: 1px solid #1a1a1a !important;
+    border-collapse: collapse !important;
+    width: 100% !important;
+    font-family: 'Outfit', 'Courier New', monospace !important;
+    font-size: 0.78rem !important;
+    margin-bottom: 25px !important;
+}
+
+#tabla-cuerpo-inventario-3col th, 
+#tabla-cuerpo-general-3col th, 
+#tabla-cuerpo-resultados-3col th {
+    background-color: #eae7dc !important; /* Vintage light grey-beige */
+    color: #1a1a1a !important;
+    border: 1px solid #1a1a1a !important;
+    font-weight: bold !important;
+    text-transform: uppercase;
+    font-size: 0.7rem !important;
+    padding: 8px 6px !important;
+    letter-spacing: 0.5px;
+}
+
+#tabla-cuerpo-inventario-3col td, 
+#tabla-cuerpo-general-3col td, 
+#tabla-cuerpo-resultados-3col td {
+    border: 1px solid #dcdad4 !important; /* Subtle grey horizontal lines */
+    border-left: 1px solid #1a1a1a !important; /* Strong vertical lines */
+    border-right: 1px solid #1a1a1a !important;
+    padding: 6px 8px !important;
+    color: #1a1a1a !important;
+}
+
+/* Mimic traditional Red ledger vertical lines for the three amount columns */
+/* In 8-column layout (Inventario): Parcial is 6th (index 5), Total Cuenta is 7th (index 6), Total Group is 8th (index 7) */
+#tabla-cuerpo-inventario-3col td:nth-child(6),
+#tabla-cuerpo-inventario-3col td:nth-child(7),
+#tabla-cuerpo-inventario-3col td:nth-child(8) {
+    border-left: 1.5px solid rgba(220, 38, 38, 0.45) !important; /* Red ledger line */
+    background-color: rgba(250, 240, 230, 0.3) !important;
+}
+
+/* For 4-column layouts (General, Resultados): 3rd and 4th cells are Amount columns */
+#tabla-cuerpo-general-3col td:nth-child(3),
+#tabla-cuerpo-general-3col td:nth-child(4),
+#tabla-cuerpo-resultados-3col td:nth-child(3),
+#tabla-cuerpo-resultados-3col td:nth-child(4) {
+    border-left: 1.5px solid rgba(220, 38, 38, 0.45) !important; /* Red ledger line */
+    background-color: rgba(250, 240, 230, 0.3) !important;
+}
+
+/* Double underline for totals (Accounting standard) */
+.double-underline {
+    border-bottom: 3px double #1a1a1a !important;
+}
+
+/* Notes visor/containers integrated in each tab */
+.balance-note-container {
+    font-family: Arial, sans-serif !important;
+    font-size: 0.8rem !important;
+    line-height: 1.5 !important;
+    background-color: #faf9f6 !important;
+    border: 1px solid #1a1a1a !important;
+    padding: 12px 15px !important;
+    color: #1a1a1a !important;
+    margin-bottom: 20px !important;
+    white-space: pre-wrap !important;
+    text-align: justify !important;
+}
+
+/* Signatures box */
+#balance-firmas-box {
+    border-top: 1px solid #1a1a1a !important;
+    padding-top: 30px !important;
+    margin-top: 50px !important;
+    page-break-inside: avoid;
+}
+
+#balance-firmas-box div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#balance-firmas-box span {
+    font-family: 'Outfit', sans-serif;
+    color: #1a1a1a;
+}
+
+/* PRINT MEDIA OVERRIDES FOR LIBRO DE INVENTARIO Y BALANCES */
+@media print {
+    @page balancesPage {
+        size: letter portrait;
+        margin: 0.4cm;
+    }
+
+    /* Hide all browser interface and non-printable elements */
+    body[data-print-mode="balances"] {
+        page: balancesPage;
+        background-color: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Ocultar TODOS los elementos de UI en modo balances */
+    body[data-print-mode="balances"] .sidebar,
+    body[data-print-mode="balances"] .top-header,
+    body[data-print-mode="balances"] .filters-bar,
+    body[data-print-mode="balances"] #balance-tabs-container,
+    body[data-print-mode="balances"] #balance-notes-edit-box,
+    body[data-print-mode="balances"] #balance-historial-container,
+    body[data-print-mode="balances"] #balance-visor-container > .filters-bar,
+    body[data-print-mode="balances"] .btn,
+    body[data-print-mode="balances"] .toast-container,
+    body[data-print-mode="balances"] .modal-overlay {
+        display: none !important;
+    }
+
+    /* Ocultar todas las secciones excepto balances */
+    body[data-print-mode="balances"] .content-section {
+        display: none !important;
+    }
+
+    body[data-print-mode="balances"] .content-section#balances-section {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 0 !important;
+    }
+
+    /* El main-content sin padding ni margen */
+    body[data-print-mode="balances"] .main-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: #fff !important;
+        gap: 0 !important;
+        display: block !important;
+    }
+
+    /* El app-container sin gaps */
+    body[data-print-mode="balances"] .app-container {
+        display: block !important;
+        gap: 0 !important;
+    }
+
+    /* Ocultar el contenedor de historial, solo mostrar el visor */
+    body[data-print-mode="balances"] #balance-historial-container {
+        display: none !important;
+    }
+
+    /* El visor container sin márgenes */
+    body[data-print-mode="balances"] #balance-visor-container {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* El bloque visor sin bordes ni paddings decorativos */
+    body[data-print-mode="balances"] #balance-bloque-visor {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0.2cm !important;
+        margin: 0 !important;
+        background-color: #fff !important;
+        color: #000 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    body[data-print-mode="balances"] #balance-bloque-visor::before {
+        display: none !important; /* Ocultar la marca de agua decorativa */
+    }
+
+    /* Mostrar todos los tabs de forma secuencial */
+    body[data-print-mode="balances"] .balance-tab-content {
+        display: block !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    /* Saltos de página explícitos solo para las pestañas 2 y 3 */
+    body[data-print-mode="balances"] #tab-content-bal-general,
+    body[data-print-mode="balances"] #tab-content-bal-resultados {
+        page-break-before: always !important;
+        break-before: page !important;
+    }
+
+    /* Configuración de tablas para impresión */
+    body[data-print-mode="balances"] #tabla-cuerpo-inventario-3col, 
+    body[data-print-mode="balances"] #tabla-cuerpo-general-3col, 
+    body[data-print-mode="balances"] #tabla-cuerpo-resultados-3col {
+        width: 100% !important;
+        border: 1.5px solid #000 !important;
+        font-size: 0.65rem !important;
+    }
+
+    body[data-print-mode="balances"] #tabla-cuerpo-inventario-3col th, 
+    body[data-print-mode="balances"] #tabla-cuerpo-general-3col th, 
+    body[data-print-mode="balances"] #tabla-cuerpo-resultados-3col th {
+        background-color: #f0f0f0 !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        font-size: 0.6rem !important;
+        padding: 4px 2px !important;
+    }
+
+    body[data-print-mode="balances"] #tabla-cuerpo-inventario-3col td, 
+    body[data-print-mode="balances"] #tabla-cuerpo-general-3col td, 
+    body[data-print-mode="balances"] #tabla-cuerpo-resultados-3col td {
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        padding: 4px 5px !important;
+    }
+
+    /* Líneas rojas en columnas de mayor para impresión oficial */
+    body[data-print-mode="balances"] #tabla-cuerpo-inventario-3col td:nth-child(6),
+    body[data-print-mode="balances"] #tabla-cuerpo-inventario-3col td:nth-child(7),
+    body[data-print-mode="balances"] #tabla-cuerpo-inventario-3col td:nth-child(8),
+    body[data-print-mode="balances"] #tabla-cuerpo-general-3col td:nth-child(3),
+    body[data-print-mode="balances"] #tabla-cuerpo-general-3col td:nth-child(4),
+    body[data-print-mode="balances"] #tabla-cuerpo-resultados-3col td:nth-child(3),
+    body[data-print-mode="balances"] #tabla-cuerpo-resultados-3col td:nth-child(4) {
+        border-left: 1.5px solid #ff0000 !important;
+        background-color: transparent !important;
+    }
+
+    /* Caja de notas en impresión */
+    body[data-print-mode="balances"] .balance-note-container {
+        border: 1px solid #000 !important;
+        padding: 8px 10px !important;
+        font-size: 0.72rem !important;
+        background-color: #fff !important;
+        color: #000 !important;
+        margin-bottom: 10px !important;
+        white-space: pre-wrap !important;
+    }
+
+    /* Caja de firmas */
+    body[data-print-mode="balances"] #balance-firmas-box {
+        border-top: 1.5px solid #000 !important;
+        margin-top: 30px !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Cabecera del documento en impresión */
+    body[data-print-mode="balances"] .seniat-header-container {
+        padding-bottom: 10px !important;
+        margin-bottom: 12px !important;
+    }
+
+    /* Títulos de sección en impresión */
+    body[data-print-mode="balances"] .balance-tab-content h3 {
+        font-size: 0.85rem !important;
+        margin-bottom: 8px !important;
+        padding-bottom: 5px !important;
+    }
+}
+
+/* ==========================================================================
+   RESUMEN CONSOLIDADO DE COMPRAS Y VENTAS (ARTÍCULO 72 REGLAMENTO IVA)
+   ========================================================================== */
+
+/* Utility to toggle cards on screen and in print */
+.seniat-form-layout.hidden-card {
+    display: none !important;
+}
+
+/* Art 72 Header Styles */
+.art72-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    font-family: Arial, sans-serif;
+    color: #000;
+}
+.art72-header-left {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.art72-empresa-name {
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+}
+.art72-empresa-rif {
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+.art72-header-middle {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.art72-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+.art72-subtitle {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 2px;
+}
+.art72-header-right {
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.art72-period-box {
+    border: 2px solid #000;
+    padding: 6px;
+    text-align: center;
+    width: 100%;
+    max-width: 180px;
+    background-color: #fff;
+}
+.art72-period-title {
+    font-size: 0.65rem;
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+    padding-bottom: 2px;
+    margin-bottom: 4px;
+}
+.art72-period-dates {
+    font-size: 0.85rem;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Art 72 Table Styles */
+.art72-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 16px 0;
+    border: none !important;
+    font-family: Arial, sans-serif;
+    color: #000;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+}
+.art72-table th, .art72-table td {
+    border: none;
+    padding: 4px 0px;
+    vertical-align: middle;
+}
+.art72-table th {
+    background-color: transparent !important;
+    font-weight: bold;
+    text-align: left;
+}
+.art72-section-header {
+    background-color: transparent !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.art72-section-header td {
+    padding: 4px 0px;
+}
+.art72-total-row {
+    font-weight: bold;
+    background-color: transparent !important;
+}
+.art72-final-total-row {
+    font-weight: bold;
+    background-color: transparent !important;
+}
+.art72-final-total-row td {
+    border-top: 2px solid #000;
+    border-bottom: 2px double #000;
+}
+.art72-table td input.input-control {
+    background: transparent;
+    color: #000;
+    border: none;
+    border-bottom: 1px dashed transparent;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif !important;
+    font-size: 0.8rem;
+    font-weight: normal;
+    text-align: right;
+}
+.art72-table td input.input-control:focus {
+    outline: none;
+    border-bottom: 1px solid #000;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+.art72-table .font-mono {
+    font-family: Arial, sans-serif !important;
+}
+
+/* Signatures */
+.art72-footer-signatures {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+    font-size: 0.72rem;
+    font-family: Arial, sans-serif;
+    color: #000;
+    page-break-inside: avoid;
+}
+.art72-signature-box, .art72-stamp-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+}
+.art72-signature-line, .art72-stamp-line {
+    border-bottom: 1.5px solid #000;
+    width: 100%;
+    margin-bottom: 6px;
+    height: 40px;
+}
+
+/* Print Overrides for Art 72 */
+@media print {
+    #printable-report-card-art72 {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0.2cm !important;
+        margin: 0 !important;
+        background-color: #fff !important;
+        color: #000 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        page-break-after: avoid !important;
+    }
+    
+    #printable-report-card-art72 .art72-table {
+        border: none !important;
+        border-collapse: separate !important;
+        border-spacing: 16px 0 !important;
+        font-size: 0.72rem !important;
+    }
+    
+    #printable-report-card-art72 th {
+        background-color: transparent !important;
+    }
+    
+    #printable-report-card-art72 .art72-section-header {
+        background-color: transparent !important;
+    }
+    
+    #printable-report-card-art72 .art72-table td input.input-control {
+        border: none !important;
+        background: transparent !important;
+        text-align: right;
+        font-family: Arial, sans-serif !important;
+        font-size: 0.72rem !important;
+        padding: 0 !important;
+    }
+}

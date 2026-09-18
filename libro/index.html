@@ -1,0 +1,2691 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro Fiscal y Declaración Forma 30 SENIAT</title>
+    <link rel="icon" type="image/webp" href="assets/OIP.webp">
+    <!-- Estilos de la Aplicación -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- Estilos de la Forma 30 y Desglose Fiscal de Venezuela -->
+    <link rel="stylesheet" href="assets/css/seniat.css">
+    <!-- Chart.js para Gráficos Interactivos (Cargado vía CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Estilos Inline Extraídos -->
+    <link rel="stylesheet" href="assets/css/inline_styles.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- BARRA SUPERIOR DE NAVEGACIÓN -->
+        <aside class="sidebar">
+            <div class="sidebar-header-mobile">
+                <div class="brand">
+                    <div class="brand-icon" style="background: #ffffff; padding: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: var(--shadow-glow);">
+                        <img src="assets/OIP.webp" alt="Logo" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;">
+                    </div>
+                    <div class="brand-name">LibroFiscalVE</div>
+                </div>
+                <button class="menu-toggle u-style-4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+            
+            <!-- SELECTOR DE BENEFICIARIO ACTIVO -->
+            <div class="beneficiary-selector-container u-style-1">
+                <label class="u-style-2" for="select-beneficiario-activo">Contribuyente Activo</label>
+                <select id="select-beneficiario-activo" class="input-control u-style-3">
+                    <!-- Cargado dinámicamente -->
+                </select>
+            </div>
+            
+            <nav class="nav-menu">
+                <li class="nav-item active" data-section="dashboard">
+                    <button>
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                        Dashboard
+                    </button>
+                </li>
+                <li class="nav-item" data-section="compras">
+                    <button>
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        Libro de Compras
+                    </button>
+                </li>
+                <li class="nav-item" data-section="ventas">
+                    <button>
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        Libro de Ventas
+                    </button>
+                </li>
+                <li class="nav-item" data-section="inventario">
+                    <button>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        Libro de Inventario
+                    </button>
+                </li>
+                <li class="nav-item" data-section="diario">
+                    <button>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Libro Diario
+                    </button>
+                </li>
+                <li class="nav-item" data-section="mayor">
+                    <button>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="15" y2="17"></line></svg>
+                        Libro Mayor
+                    </button>
+                </li>
+                <li class="nav-item" data-section="balances">
+                    <button>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Inventario y Balances
+                    </button>
+                </li>
+                <li class="nav-item" data-section="contactos">
+                    <button>
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        Clientes / Proveedores
+                    </button>
+                </li>
+                <li class="nav-item" data-section="reportes">
+                    <button>
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        Forma 30 SENIAT
+                    </button>
+                </li>
+                <li class="nav-item" data-section="beneficiarios">
+                    <button>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Beneficiarios
+                    </button>
+                </li>
+                <li class="nav-item" data-section="configuracion">
+                    <button>
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        Configuraciones
+                    </button>
+                </li>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="database-status">
+                    <span id="db-status-dot" class="status-dot unsaved"></span>
+                    <span id="db-status-label">Guardado Local (Navegador)</span>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            
+            <!-- HEADER SUPERIOR -->
+            <header class="top-header">
+                <div class="page-title">
+                    <h1 id="header-section-title">Contabilidad SENIAT</h1>
+                    <p id="header-section-subtitle">Libros Fiscales y Consolidado de IVA para Forma 30</p>
+                </div>
+                <div class="header-actions">
+                    <div class="u-style-5" id="active-company-header">
+                        <!-- Cargado por JS -->
+                    </div>
+                    <button id="btn-toggle-theme" class="btn btn-secondary btn-icon-only" title="Cambiar Tema">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: DASHBOARD                           -->
+            <!-- ============================================ -->
+            <section id="dashboard-section" class="content-section active">
+                
+                <!-- KPI GRID -->
+                <div class="kpi-grid">
+                    <div class="kpi-card kpi-ventas">
+                        <div class="kpi-header">
+                            <span>Ventas Facturadas (Mes/Quincena)</span>
+                            <div class="kpi-icon">
+                                <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-ventas-val">Bs. 0</div>
+                        <div class="kpi-trend text-danger">Débito Fiscal Acumulado</div>
+                    </div>
+                    
+                    <div class="kpi-card kpi-compras">
+                        <div class="kpi-header">
+                            <span>Compras Facturadas (Mes/Quincena)</span>
+                            <div class="kpi-icon">
+                                <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-compras-val">Bs. 0</div>
+                        <div class="kpi-trend text-success">Crédito Fiscal Acumulado</div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span>Retenciones Recibidas (Ventas)</span>
+                            <div class="kpi-icon u-style-6">
+                                <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value u-style-7" id="kpi-ret-recibidas-val">Bs. 0</div>
+                        <div class="kpi-trend text-muted">Descontable en Forma 30</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span>Retenciones Emitidas (Compras)</span>
+                            <div class="kpi-icon u-style-8">
+                                <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value u-style-9" id="kpi-ret-emitidas-val">Bs. 0</div>
+                        <div class="kpi-trend text-muted">IVA retenido a enterar</div>
+                    </div>
+
+                    <div class="kpi-card kpi-neto" id="kpi-neto-card">
+                        <div class="kpi-header">
+                            <span>Impuesto IVA Estimado</span>
+                            <div class="kpi-icon">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-neto-val">Bs. 0</div>
+                        <div class="kpi-trend text-muted" id="kpi-neto-sub">Balance neto con retenciones</div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS Y ACCIONES -->
+                <div class="dashboard-layout">
+                    <div class="card">
+                        <div class="card-title">
+                            <span>Ventas vs. Compras Mensuales</span>
+                            <span class="text-muted u-style-10">Historial del Negocio (Bs.)</span>
+                        </div>
+                        <div class="u-style-11">
+                            <canvas id="chart-dashboard"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="card flex u-style-12">
+                        <div class="dashboard-logo-container">
+                            <img src="assets/OIP.webp" alt="Logo General" class="dashboard-logo-img">
+                        </div>
+                        <div class="card-title">Ingreso Rápido de Facturas</div>
+                        <button onclick="abrirModalCompra()" class="btn btn-success u-style-13">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Factura de Compra / Proveedor
+                        </button>
+                        <button onclick="abrirModalVenta()" class="btn btn-danger u-style-13">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Factura de Venta / Cliente
+                        </button>
+                        <button onclick="abrirModalContacto()" class="btn btn-primary u-style-13">
+                            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+                            Registrar R.I.F. de Contacto
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: LIBRO COMPRAS                       -->
+            <!-- ============================================ -->
+            <section id="compras-section" class="content-section">
+                
+                <div class="filters-bar">
+                    <div class="filters-group">
+                        <div class="input-group">
+                            <input type="text" id="buscar-compras" class="input-control u-style-14" placeholder="Buscar compras (Proveedor, RIF, factura)...">
+                        </div>
+                        <div class="input-group">
+                            <input type="month" id="filtro-mes-compras" class="input-control">
+                        </div>
+                        <div class="input-group">
+                            <select id="filtro-periodo-compras" class="input-control">
+                                <option value="completo">Mes Completo</option>
+                                <option value="q1">1ra Quincena (Días 1-15)</option>
+                                <option value="q2">2da Quincena (Días 16+)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="abrirModalCompra()" class="btn btn-success">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nueva Compra
+                    </button>
+                </div>
+
+                <div class="card u-style-15">
+                    <div class="table-container">
+                        <table class="data-table u-style-16">
+                            <thead>
+                                <tr>
+                                    <th>Oper. N°</th>
+                                    <th>Fecha</th>
+                                    <th>RIF</th>
+                                    <th>Proveedor</th>
+                                    <th>Forma D / Expediente</th>
+                                    <th>Factura</th>
+                                    <th>Control</th>
+                                    <th>Nota Débito</th>
+                                    <th>Nota Crédito</th>
+                                    <th>Doc. Afectado</th>
+                                    <th class="text-right">Total Factura</th>
+                                    <th class="text-right">Exento</th>
+                                    <th class="text-right">Sin Crédito</th>
+                                    <th class="text-right">Base 16%</th>
+                                    <th class="text-right">IVA 16%</th>
+                                    <th class="text-right">Base 8%/31%</th>
+                                    <th class="text-right">IVA Retenido</th>
+                                    <th class="text-right">Retenido Terceros</th>
+                                    <th class="text-right">IVA Aduana</th>
+                                    <th>Comprobante Retención</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-compras-body">
+                                <!-- Cargado por app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: LIBRO VENTAS                         -->
+            <!-- ============================================ -->
+            <section id="ventas-section" class="content-section">
+                
+                <div class="filters-bar">
+                    <div class="filters-group">
+                        <div class="input-group">
+                            <input type="text" id="buscar-ventas" class="input-control u-style-14" placeholder="Buscar ventas (Cliente, RIF, factura)...">
+                        </div>
+                        <div class="input-group">
+                            <input type="month" id="filtro-mes-ventas" class="input-control">
+                        </div>
+                        <div class="input-group">
+                            <select id="filtro-periodo-ventas" class="input-control">
+                                <option value="completo">Mes Completo</option>
+                                <option value="q1">1ra Quincena (Días 1-15)</option>
+                                <option value="q2">2da Quincena (Días 16+)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="abrirModalVenta()" class="btn btn-danger">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nueva Venta
+                    </button>
+                </div>
+
+                <div class="card u-style-15">
+                    <div class="table-container">
+                        <table class="data-table u-style-17">
+                            <thead>
+                                <tr>
+                                    <th>Oper. N°</th>
+                                    <th>Fecha</th>
+                                    <th>RIF</th>
+                                    <th>Cliente</th>
+                                    <th>Máq. Fiscal / Z</th>
+                                    <th>Forma D</th>
+                                    <th>Factura</th>
+                                    <th>Control</th>
+                                    <th>Nota Débito</th>
+                                    <th>Nota Crédito</th>
+                                    <th>Doc. Afectado</th>
+                                    <th class="text-right">Total Factura</th>
+                                    <th class="text-right">Exento</th>
+                                    <th class="text-right">Base 16%</th>
+                                    <th class="text-right">IVA 16%</th>
+                                    <th class="text-right">Base 8%/31%</th>
+                                    <th class="text-right">IVA Retenido</th>
+                                    <th class="text-right">IVA Percibido</th>
+                                    <th class="text-right">Por Cuenta de Terceros</th>
+                                    <th>Comprobante Retención</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-ventas-body">
+                                <!-- Cargado por app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: LIBRO DE INVENTARIO (SENIAT)        -->
+            <!-- ============================================ -->
+            <section id="inventario-section" class="content-section">
+                
+                <!-- KPI GRID DE INVENTARIO -->
+                <div class="kpi-grid">
+                    <div class="kpi-card kpi-compras">
+                        <div class="kpi-header">
+                            <span>Valor Total del Inventario</span>
+                            <div class="kpi-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-inv-valor-val">Bs. 0,00</div>
+                        <div class="kpi-trend text-success" id="kpi-inv-valor-trend">Valoración Promedio Ponderado</div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span>Materiales en Catálogo</span>
+                            <div class="kpi-icon" style="background-color: var(--color-primary-glow); color: var(--color-primary);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-inv-articulos-val" style="color: var(--color-primary);">0</div>
+                        <div class="kpi-trend text-muted">Productos registrados</div>
+                    </div>
+                    
+                    <div class="kpi-card kpi-neto saldo-favor">
+                        <div class="kpi-header">
+                            <span>Entradas Registradas</span>
+                            <div class="kpi-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-inv-entradas-val">0</div>
+                        <div class="kpi-trend text-success">Adquisiciones y Ajustes+</div>
+                    </div>
+
+                    <div class="kpi-card kpi-ventas">
+                        <div class="kpi-header">
+                            <span>Salidas Registradas</span>
+                            <div class="kpi-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-inv-salidas-val">0</div>
+                        <div class="kpi-trend text-danger">Despachos, Ventas y Mermas</div>
+                    </div>
+                </div>
+
+                <!-- SELECTOR DE VISTAS DE INVENTARIO (TABS) -->
+                <div style="display:flex; gap:8px; margin-top:8px; margin-bottom:8px;">
+                    <button class="btn btn-primary" id="btn-tab-inv-catalogo" onclick="switchInventarioTab('catalogo')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Catálogo de Materiales
+                    </button>
+                    <button class="btn btn-secondary" id="btn-tab-inv-diario" onclick="switchInventarioTab('diario')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Libro Diario de Control (SENIAT)
+                    </button>
+                </div>
+
+                <!-- CONTENEDOR: CATÁLOGO DE MATERIALES -->
+                <div id="inv-panel-catalogo" class="inv-panel active">
+                    <div class="filters-bar">
+                        <div class="filters-group">
+                            <div class="input-group">
+                                <input type="text" id="buscar-articulos" class="input-control" style="min-width:320px;" placeholder="Buscar material por código o nombre...">
+                            </div>
+                        </div>
+                        <button onclick="abrirModalArticulo()" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Nuevo Artículo / Material
+                        </button>
+                    </div>
+
+                    <div class="card u-style-15" style="margin-top:16px;">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Descripción del Material</th>
+                                        <th>Unidad</th>
+                                        <th class="text-right">Existencia (Stock)</th>
+                                        <th class="text-right">Costo Promedio (Bs.)</th>
+                                        <th class="text-right">Valor Total en Stock (Bs.)</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-articulos-body">
+                                    <!-- Cargado por JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENEDOR: LIBRO DIARIO DE CONTROL (KARDEX / SENIAT) -->
+                <div id="inv-panel-diario" class="inv-panel" style="display:none;">
+                    <div class="filters-bar">
+                        <div class="filters-group">
+                            <div class="input-group">
+                                <label for="filtro-articulo-movimientos">Material / Producto</label>
+                                <select id="filtro-articulo-movimientos" class="input-control" style="min-width:220px;" onchange="filtrarInventarioMovimientos()">
+                                    <option value="">Todos los Materiales</option>
+                                    <!-- Cargado por JS -->
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="filtro-mes-inventario">Período Fiscal</label>
+                                <input type="month" id="filtro-mes-inventario" class="input-control" onchange="filtrarInventarioMovimientos()">
+                            </div>
+                        </div>
+                        <div class="flex gap-8" style="flex-wrap:wrap;">
+                            <button onclick="abrirModalMovimiento()" class="btn btn-success">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Registrar Entrada / Salida
+                            </button>
+                            <button id="btn-imprimir-libro-inventario" class="btn btn-secondary" onclick="imprimirLibroInventario()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                                Imprimir Reporte Fiscal
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- REPORTE DE CONTROL FISCAL TIPO SENIAT -->
+                    <div class="card u-style-15" style="margin-top:16px;">
+                        <div class="table-container">
+                            <table class="data-table" id="tabla-libro-diario-inventario" style="font-size:0.85rem;">
+                                <thead>
+                                    <!-- Encabezado fiscal oficial del SENIAT con agrupamiento de Entrada/Salida/Saldo -->
+                                    <tr style="border-bottom: 2px solid var(--border-color);">
+                                        <th colspan="5" style="border-right: 1px solid var(--border-color); text-align:center;">DATOS GENERALES DE LA OPERACIÓN</th>
+                                        <th colspan="3" style="border-right: 1px solid var(--border-color); text-align:center; background-color: var(--color-success-glow); color: var(--color-success);">ENTRADAS (Ingresos/Ajustes+)</th>
+                                        <th colspan="3" style="border-right: 1px solid var(--border-color); text-align:center; background-color: var(--color-danger-glow); color: var(--color-danger);">SALIDAS (Ventas/Consumos/Mermas)</th>
+                                        <th colspan="3" style="text-align:center; background-color: var(--color-primary-glow); color: var(--color-primary);">SALDO EN EXISTENCIA (Promedio Ponderado)</th>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <th>Fecha</th>
+                                        <th>Material</th>
+                                        <th>Doc. Soporte</th>
+                                        <th>N° Doc.</th>
+                                        <th style="border-right: 1px solid var(--border-color);">Concepto / Detalle</th>
+                                        
+                                        <!-- Entradas -->
+                                        <th>Cant.</th>
+                                        <th>Costo Unit.</th>
+                                        <th style="border-right: 1px solid var(--border-color);">Total Bs.</th>
+                                        
+                                        <!-- Salidas -->
+                                        <th>Cant.</th>
+                                        <th>Costo Unit.</th>
+                                        <th style="border-right: 1px solid var(--border-color);">Total Bs.</th>
+                                        
+                                        <!-- Saldo -->
+                                        <th>Cant.</th>
+                                        <th>Costo Prom.</th>
+                                        <th>Saldo Total Bs.</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-libro-diario-body">
+                                    <!-- Cargado por JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: CONTACTOS                           -->
+            <!-- ============================================ -->
+            <section id="contactos-section" class="content-section">
+                
+                <div class="filters-bar">
+                    <div class="filters-group">
+                        <div class="input-group">
+                            <input type="text" id="buscar-contactos" class="input-control u-style-18" placeholder="Buscar por Nombre, RIF o Correo...">
+                        </div>
+                        <div class="input-group">
+                            <select id="filtro-tipo-contactos" class="input-control">
+                                <option value="">Todos los Tipos</option>
+                                <option value="cliente">Clientes</option>
+                                <option value="proveedor">Proveedores</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="abrirModalContacto()" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+                        Nuevo R.I.F.
+                    </button>
+                </div>
+
+                <div class="card u-style-15">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>R.I.F.</th>
+                                    <th>Razón Social / Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Contribuyente Especial</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-contactos-body">
+                                <!-- Cargado por app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: REPORTES (FORMA 30 SENIAT)          -->
+            <!-- ============================================ -->
+            <section id="reportes-section" class="content-section">
+                
+                <div class="filters-bar">
+                    <div class="filters-group">
+                        <div class="input-group">
+                            <label>Periodo Fiscal</label>
+                            <input type="month" id="reporte-mes-select" class="input-control">
+                        </div>
+                        <div class="input-group">
+                            <label>Quincena / Mes</label>
+                            <select id="reporte-periodo-select" class="input-control">
+                                <option value="q1">Primera Quincena (Días 1 al 15)</option>
+                                <option value="q2">Segunda Quincena (Días 16 al fin)</option>
+                                <option value="completo">Mes Completo (Ordinario)</option>
+                            </select>
+                        </div>
+                        <button id="btn-cargar-reporte" class="btn btn-primary u-style-19">
+                            Calcular Declaración
+                        </button>
+                    </div>
+                    <div class="filters-group" style="margin-left: auto; gap: 8px;">
+                        <button id="btn-toggle-formato-reporte" class="btn btn-secondary" onclick="window.toggleFormatoReporteIVA()">
+                            <span id="btn-toggle-formato-reporte-texto">Ver Formato Art. 72</span>
+                        </button>
+                        <button id="btn-imprimir-reporte" class="btn btn-secondary u-style-20">
+                            <svg viewBox="0 0 24 24"><polygon points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                            Imprimir / Guardar PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PLANILLA DIGITAL FORMA 30 -->
+                <div class="seniat-form-layout" id="printable-report-card">
+                    
+                    <!-- MODELO OFICIAL FORMA IVA 90030 (VENEZUELA) -->
+                    <div class="seniat-header-container">
+                        <div class="seniat-header-left">
+                            <div class="seniat-country">REPUBLICA BOLIVARIANA DE VENEZUELA</div>
+                            <div class="seniat-logo-img-box">
+                                <img src="assets/OIP.webp" alt="SENIAT">
+                            </div>
+                            <div class="seniat-subtext">SERVICIO NACIONAL INTEGRADO DE ADMINISTRACION ADUANERA Y TRIBUTARIA</div>
+                            <div class="seniat-subtext">Adscrito al Ministerio del Poder Popular para las Finanzas</div>
+                            <div class="seniat-subtext">RIF: G-20000303-0</div>
+                        </div>
+                        <div class="seniat-header-middle">
+                            <div class="forma-iva-title">FORMA IVA 90030</div>
+                            <div class="declaracion-title">DECLARACION Y PAGO DEL IMPUESTO</div>
+                            <div class="declaracion-title">AL VALOR AGREGADO</div>
+                        </div>
+                        <div class="seniat-header-right">
+                            <table class="periodo-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">PERIODO DE IMPOSICION</th>
+                                    </tr>
+                                    <tr>
+                                        <th>MES</th>
+                                        <th>AÑO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="report-header-mes">-</td>
+                                        <td id="report-header-ano">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="sustitutiva-row">
+                        <div class="sustitutiva-left">SI ESTA ES UNA DECLARACIÓN SUSTITUTIVA O COMPLEMENTARIA, Nº, FECHA</div>
+                        <div class="sustitutiva-right">
+                            <span style="font-size: 0.65rem; font-weight: bold; margin-right: 4px;">FECHA</span>
+                            <div class="empty-box-fecha"></div>
+                        </div>
+                    </div>
+
+                    <div class="datos-seccion-titulo">A.- DATOS DEL CONTRIBUYENTE</div>
+                    <div class="datos-contribuyente-row">
+                        <div class="contribuyente-nombre-box" id="report-header-empresa">-</div>
+                        <div class="contribuyente-rif-nit-box">
+                            <div class="rif-nit-line"><strong>Nº RIF:</strong> <span id="report-header-rut">-</span></div>
+                            <div class="rif-nit-line"><strong>Nº NIT:</strong> <span></span></div>
+                        </div>
+                    </div>
+
+                    <div class="datos-seccion-titulo">B.- DATOS DEL APODERADO O REPRESENTANTE LEGAL</div>
+                    <div class="datos-contribuyente-row">
+                        <div class="contribuyente-nombre-box" style="min-height: 38px;"></div>
+                        <div class="contribuyente-rif-nit-box" style="min-height: 38px; justify-content: center;">
+                            <div class="rif-nit-line" style="border-bottom: none;"><strong>Nº NIT:</strong> <span></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Elementos Ocultos Necesarios para Compatibilidad con app.js -->
+                    <div style="display:none;" id="report-period-title">-</div>
+                    <div style="display:none;" id="report-header-contribuyente-tipo">-</div>
+                    <div style="display:none;" id="report-certificado-num">-</div>
+                    <div style="display:none;" id="report-presentacion-fecha">-</div>
+
+                    <!-- PAGE 1 OF FORMA 99030 -->
+                    <div class="seniat-page">
+                        <!-- SECCIÓN: DÉBITOS FISCALES (VENTAS) -->
+                        <div class="seniat-section-header">I. Débitos Fiscales (Ventas y Salidas)</div>
+                        <div class="seniat-grid">
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r">OPERACIONES REALIZADAS</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">CASILLA</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">BASE IMPONIBLE (Bs.)</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell u-style-40">DÉBITO FISCAL (Bs.)</div></div>
+
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>1</b> Ventas Internas no Gravadas</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">40</span></div>
+                                <div class="seniat-cell num border-r" id="f30-v-exenta-base">0,00</div>
+                                <div class="seniat-cell num u-style-41"></div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>2</b> Ventas de Exportación</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">41</span></div>
+                                <div class="seniat-cell num border-r" id="f30-v-export-base">0,00</div>
+                                <div class="seniat-cell num u-style-41"></div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>3</b> Ventas Internas Gravadas por Alícuota General</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">42</span></div>
+                                <div class="seniat-cell num border-r" id="f30-v-general-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-v-general-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>4</b> Ventas Internas Gravadas por Alícuota General más Alícuota Adicional</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">442</span></div>
+                                <div class="seniat-cell num border-r" id="f30-v-adicional-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-v-adicional-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>5</b> Ventas Internas Gravadas por Alícuota Reducida</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">443</span></div>
+                                <div class="seniat-cell num border-r" id="f30-v-reducida-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-v-reducida-tax">0,00</div>
+                            </div>
+                            <div class="seniat-total-row">
+                                <div class="seniat-cell border-r"><b>6</b> Total Ventas y Débitos Fiscales para Efectos de Determinación</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">46</span></div>
+                                <div class="seniat-cell num border-r" id="f30-v-total-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-v-total-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>7</b> Ajustes a los Débitos Fiscales de Períodos Anteriores</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">48</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num u-style-42">
+                                    <input type="number" id="f30-v-ajuste-tax" class="input-control u-style-43" value="0.00" step="0.01" min="0">
+                                </div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>8</b> Certificados de Débitos Fiscales Exonerado (recibidos de entes exonerados)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">80</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num u-style-42">
+                                    <input type="number" id="f30-v-exonerado-tax" class="input-control u-style-43" value="0.00" step="0.01" min="0">
+                                </div>
+                            </div>
+                            <div class="seniat-total-row u-style-44">
+                                <div class="seniat-cell border-r"><b>9</b> Total Débitos Fiscales (6.Débito +/- 7 - 8)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">49</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-v-total-final-tax">0,00</div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN: CRÉDITOS FISCALES (COMPRAS) -->
+                        <div class="seniat-section-header">II. Créditos Fiscales (Compras y Entradas)</div>
+                        <div class="seniat-grid">
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r">OPERACIONES REALIZADAS</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">CASILLA</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">BASE IMPONIBLE (Bs.)</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell u-style-40">CRÉDITO FISCAL (Bs.)</div></div>
+
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>10</b> Compras no gravadas y/o sin derecho de crédito fiscal</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">30</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-exenta-base">0,00</div>
+                                <div class="seniat-cell num u-style-41"></div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>11</b> Importaciones Gravadas por Alícuota General</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">31</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-import-general-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-c-import-general-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>12</b> Importaciones Gravadas por Alícuota General más Alícuota Adicional</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">312</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-import-adicional-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-c-import-adicional-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>13</b> Importaciones Gravadas por Alícuota Reducida</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">313</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-import-reducida-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-c-import-reducida-tax">0,00</div>
+                            </div>
+                            
+                            <!-- Fila separadora en blanco oficial -->
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r u-style-45"></div>
+                                <div class="seniat-cell num border-r u-style-46"></div>
+                                <div class="seniat-cell num border-r u-style-46"></div>
+                                <div class="seniat-cell num u-style-46"></div>
+                            </div>
+
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>14</b> Compras Internas Gravadas por Alícuota General</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">33</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-general-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-c-general-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>15</b> Compras Internas Gravadas por Alícuota General más Alícuota Adicional</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">332</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-adicional-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-c-adicional-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>16</b> Compras Internas Gravadas por Alícuota Reducida</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">333</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-reducida-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-c-reducida-tax">0,00</div>
+                            </div>
+                            <div class="seniat-total-row">
+                                <div class="seniat-cell border-r"><b>17</b> Total Compras y Créditos Fiscales del Período</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">35</span></div>
+                                <div class="seniat-cell num border-r" id="f30-c-total-base">0,00</div>
+                                <div class="seniat-cell num" id="f30-c-total-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>18</b> Créditos Fiscales Totalmente Deducibles</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">70</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-c-deducibles-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>19</b> Créditos Fiscales Prorrateados (Prorata)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">37</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-c-prorata-tax">0,00</div>
+                            </div>
+                            <div class="seniat-total-row">
+                                <div class="seniat-cell border-r"><b>20</b> Total Créditos Fiscales Deducibles</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">71</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-c-total-deducibles-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>21</b> Excedente Créditos Fiscales del Mes Anterior</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">20</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num u-style-42">
+                                    <input type="number" id="f30-c-excedente-anterior" class="input-control u-style-43" value="0.00" step="0.01" min="0">
+                                </div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>22</b> Reintegro Solicitado (solo exportadores)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">21</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-c-reintegro-exportadores-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>23</b> Reintegro Solicitado (bienes/servicios entes exonerados)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">81</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-c-reintegro-exonerados-tax">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>24</b> Ajustes a los Créditos Fiscales de los Períodos Anteriores</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">38</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num u-style-42">
+                                    <input type="number" id="f30-c-ajuste-tax" class="input-control u-style-43" value="0.00" step="0.01" min="0">
+                                </div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>25</b> Certificado de Débitos Fiscales Exonerados (emitidos por entes exonerados)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">82</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-c-certificados-emitidos-tax">0,00</div>
+                            </div>
+                            <div class="seniat-total-row u-style-44">
+                                <div class="seniat-cell border-r"><b>26</b> Total Créditos Fiscales (71 + 20 - 21 - 81 +/- 38 - 82)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">39</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-c-total-final-tax">0,00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page break for vector PDF printing -->
+                    <div class="u-style-47"></div>
+
+                    <!-- PAGE 2 OF FORMA 99030 -->
+                    <div class="seniat-page u-style-48">
+                        <!-- SECCIÓN: AUTOLIQUIDACIÓN -->
+                        <div class="seniat-section-header">III. Autoliquidación del Impuesto</div>
+                        <div class="seniat-grid">
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r">OPERACIONES REALIZADAS</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">CASILLA</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">BASE IMPONIBLE (Bs.)</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell u-style-40">RESULTADO EN BS.</div></div>
+
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>27</b> Total Cuota Tributaria del Periodo. Si(49 > 39), indique la diferencia</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">53</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-v-total-cuota">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>28</b> Excedente de Crédito Fiscal para el Mes Siguiente. Si(39 > 49), indique la diferencia</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">60</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-v-excedente-mes-siguiente">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>29</b> Impuesto Pagado en Declaracion(es) Sustituida(s)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">22</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-impuesto-pagado-sustituida">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>30</b> Retenciones Descontadas en Declaración(es) Sustituida(s)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">51</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-v-retenciones-sustituida">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>31</b> Percepciones Descontadas en Declaración(es) Sustituida(s)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">24</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-v-percepciones-sustituida">0,00</div>
+                            </div>
+                            <div class="seniat-total-row">
+                                <div class="seniat-cell border-r"><b>32</b> Sub-Total Impuesto a Pagar (53-22-51-24>0)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">78</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-v-subtotal-impuesto">0,00</div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN: RETENCIONES IVA -->
+                        <div class="seniat-section-header">IV. Retenciones del IVA</div>
+                        <div class="seniat-grid">
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r">OPERACIONES REALIZADAS</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">CASILLA</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">BASE IMPONIBLE (Bs.)</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell u-style-40">RESULTADO EN BS.</div></div>
+
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>33</b> Retenciones IVA Acumuladas por Descontar</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">54</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num text-success" id="f30-retenciones-acumuladas">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>34</b> Retenciones del IVA del Periodo</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">66</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num text-success" id="f30-retenciones-periodo">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>35</b> Créditos del IVA Adquiridos por Cesiones de Retenciones</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">72</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-retenciones-cesiones">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>36</b> Recuperaciones del IVA Retenciones Solicitadas</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">73</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-retenciones-recuperaciones">0,00</div>
+                            </div>
+                            <div class="seniat-total-row">
+                                <div class="seniat-cell border-r"><b>37</b> Total Retenciones del IVA</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">74</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num text-success" id="f30-total-retenciones">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>38</b> Retenciones del IVA Soportadas y Descontadas</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">55</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num text-success" id="f30-retenciones-descontadas">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>39</b> Saldo Retenciones del IVA no Aplicado</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">67</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num text-success" id="f30-retenciones-saldo-no-aplicado">0,00</div>
+                            </div>
+                            <div class="seniat-total-row">
+                                <div class="seniat-cell border-r"><b>40</b> Sub-Total Impuesto a Pagar (78-55)</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">56</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-subtotal-impuesto-despues-retenciones">0,00</div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN: PERCEPCIÓN -->
+                        <div class="seniat-section-header">V. Percepciones del IVA</div>
+                        <div class="seniat-grid">
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r">OPERACIONES REALIZADAS</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">CASILLA</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell border-r u-style-40">BASE IMPONIBLE (Bs.)</div></div>
+                            <div class="seniat-grid-header"><div class="seniat-cell u-style-40">RESULTADO EN BS.</div></div>
+
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>41</b> Percepciones Acumuladas en Importaciones por Descontar</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">57</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-percepciones-acumuladas-import">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>42</b> Percepciones del Período</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">68</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-percepciones-periodo">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>43</b> Créditos Adquiridos por Cesiones de Percepciones</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">75</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-percepciones-cesiones">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>44</b> Recuperación Percepciones Solicitado</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">76</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-percepciones-recuperacion">0,00</div>
+                            </div>
+                            <div class="seniat-total-row">
+                                <div class="seniat-cell border-r"><b>45</b> Total Percepciones</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">77</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-total-percepciones">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>46</b> Percepciones en Aduanas Descontadas</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">58</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-percepciones-descontadas">0,00</div>
+                            </div>
+                            <div class="seniat-row">
+                                <div class="seniat-cell border-r"><b>47</b> Saldo Percepciones en Aduanas no Aplicado</div>
+                                <div class="seniat-cell num border-r"><span class="casilla-badge">69</span></div>
+                                <div class="seniat-cell num border-r u-style-41"></div>
+                                <div class="seniat-cell num" id="f30-percepciones-saldo-no-aplicado">0,00</div>
+                            </div>
+                            <div class="seniat-total-row u-style-49">
+                                <div class="seniat-cell border-r u-style-50"><b>48</b> TOTAL A PAGAR (40.Subtotal - 46.Percepciones Descontadas)</div>
+                                <div class="seniat-cell num border-r u-style-50"><span class="casilla-badge">90</span></div>
+                                <div class="seniat-cell num border-r u-style-51"></div>
+                                <div class="seniat-cell num font-semibold u-style-50" id="f30-total-pagar-final">0,00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sello y Firma para Impresión -->
+                    <div class="print-footer-seals">
+                        <div class="u-style-52">
+                            <div class="u-style-53">
+                                Firma Autorizada del Contribuyente
+                            </div>
+                        </div>
+                        <div class="u-style-54">
+                            <span class="u-style-55">SELLO DE RECEPCIÓN / PORTAL FISCAL</span>
+                            <div class="print-seal-box">
+                                SELLO DIGITAL / RECEPCIÓN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RESUMEN CONSOLIDADO ARTÍCULO 72 -->
+                <div class="seniat-form-layout hidden-card" id="printable-report-card-art72">
+                    <div class="art72-header-container">
+                        <div class="art72-header-left">
+                            <div class="art72-empresa-name" id="report-header-empresa-art72">-</div>
+                            <div class="art72-empresa-rif"><strong>RIF:</strong> <span id="report-header-rut-art72">-</span></div>
+                        </div>
+                        <div class="art72-header-middle">
+                            <div class="art72-title">RESUMEN CONSOLIDADO DE COMPRAS Y VENTAS</div>
+                            <div class="art72-subtitle">Artículo 72 del Reglamento de la Ley de IVA</div>
+                        </div>
+                        <div class="art72-header-right">
+                            <div class="art72-period-box">
+                                <div class="art72-period-title">PERÍODO DE IMPOSICIÓN</div>
+                                <div class="art72-period-dates" id="report-period-title-art72">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="art72-table">
+                        <thead>
+                            <tr class="art72-header-row">
+                                <th style="text-align: left; font-weight: bold; border-top: 2px solid #000; border-bottom: 2px solid #000;">Débitos fiscales</th>
+                                <th style="text-align: right; width: 200px; font-weight: bold; border-top: 2px solid #000; border-bottom: 2px solid #000;">Base Imponible</th>
+                                <th style="text-align: right; width: 200px; font-weight: bold; border-top: 2px solid #000; border-bottom: 2px solid #000;">Impuesto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- SECCIÓN: DÉBITOS FISCALES -->
+                            <tr>
+                                <td>1. Ventas internas no gravadas</td>
+                                <td class="text-right font-mono" id="f30-v-exenta-base-art72">0,00</td>
+                                <td class="text-right font-mono">-</td>
+                            </tr>
+                            <tr>
+                                <td>2. Ventas de exportación</td>
+                                <td class="text-right font-mono" id="f30-v-export-base-art72">0,00</td>
+                                <td class="text-right font-mono">-</td>
+                            </tr>
+                            <tr>
+                                <td>3. Ventas internas gravadas por alicuota general</td>
+                                <td class="text-right font-mono" id="f30-v-general-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-v-general-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>4. Ventas internas gravadas por alicuota general más adicional</td>
+                                <td class="text-right font-mono" id="f30-v-adicional-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-v-adicional-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>5. Ventas internas gravadas por alicuota reducida</td>
+                                <td class="text-right font-mono" id="f30-v-reducida-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-v-reducida-tax-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-subtotal-row">
+                                <td>6. Total ventas y débitos fiscales para efectos de determinación</td>
+                                <td class="text-right font-mono" id="f30-v-total-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-v-total-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>7. Ajuste a los débitos fiscales de periodos anteriores</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right">
+                                    <input type="number" id="f30-v-ajuste-tax-art72" class="input-control text-right" value="0.00" step="0.01" min="0" style="width: 140px; display: inline-block;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>8. Certificados de Débitos Fiscales Exonerado</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right">
+                                    <input type="number" id="f30-v-exonerado-tax-art72" class="input-control text-right" value="0.00" step="0.01" min="0" style="width: 140px; display: inline-block;">
+                                </td>
+                            </tr>
+                            <tr class="art72-section-end-row">
+                                <td style="font-weight: bold;">9. Total débitos fiscales</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-v-total-final-tax-art72" style="font-weight: bold;">0,00</td>
+                            </tr>
+
+                            <!-- SECCIÓN: CRÉDITOS FISCALES -->
+                            <tr class="art72-header-row">
+                                <td style="font-weight: bold; border-top: 2px solid #000; border-bottom: 2px solid #000; padding-top: 15px;">Créditos fiscales</td>
+                                <td style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding-top: 15px;"></td>
+                                <td style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding-top: 15px;"></td>
+                            </tr>
+                            <tr>
+                                <td>10. Compras no gravadas y/o sin derecho a crédito fiscal</td>
+                                <td class="text-right font-mono" id="f30-c-exenta-base-art72">0,00</td>
+                                <td class="text-right font-mono">-</td>
+                            </tr>
+                            <tr>
+                                <td>11. Importación gravadas por alicuota general</td>
+                                <td class="text-right font-mono" id="f30-c-import-general-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-c-import-general-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>12. Importación gravadas por alicuota general más adicional</td>
+                                <td class="text-right font-mono" id="f30-c-import-adicional-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-c-import-adicional-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>13. Importación gravadas por alicuota reducida</td>
+                                <td class="text-right font-mono" id="f30-c-import-reducida-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-c-import-reducida-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>14. Compras internas gravadas sólo por alicuota general</td>
+                                <td class="text-right font-mono" id="f30-c-general-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-c-general-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>15. Compras internas gravadas por alicuota general más adicional</td>
+                                <td class="text-right font-mono" id="f30-c-adicional-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-c-adicional-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>16. Compras internas gravadas por alicuota reducida</td>
+                                <td class="text-right font-mono" id="f30-c-reducida-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-c-reducida-tax-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-subtotal-row">
+                                <td>17. Total compras y créditos fiscales del Periodo</td>
+                                <td class="text-right font-mono" id="f30-c-total-base-art72">0,00</td>
+                                <td class="text-right font-mono" id="f30-c-total-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>18. Créditos Fiscales Totalmente Deducibles</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-c-deducibles-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>19. Créditos fiscales producto de la aplicación del porcentaje de la prorrata</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-c-prorata-tax-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-subtotal-row">
+                                <td>20. Total créditos fiscales deducibles</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-c-total-deducibles-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>21. Excedente créditos fiscales del mes anterior</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right">
+                                    <input type="number" id="f30-c-excedente-anterior-art72" class="input-control text-right" value="0.00" step="0.01" min="0" style="width: 140px; display: inline-block;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>22. Reintegro solicitado (Sólo Exportadores)</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-c-reintegro-exportadores-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>23. Reintegro solicitado (Sólo quien suministre bienes o presten serv. a entes exonerados)</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-c-reintegro-exonerados-tax-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>24. Ajustes a los créditos fiscales de períodos anteriores</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right">
+                                    <input type="number" id="f30-c-ajuste-tax-art72" class="input-control text-right" value="0.00" step="0.01" min="0" style="width: 140px; display: inline-block;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>25. Certificados de Débitos fiscales Exonerados</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-c-certificados-emitidos-tax-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-section-end-row">
+                                <td style="font-weight: bold;">26. Total créditos fiscales</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-c-total-final-tax-art72" style="font-weight: bold;">0,00</td>
+                            </tr>
+
+                            <!-- SECCIÓN: AUTOLIQUIDACIÓN -->
+                            <tr class="art72-header-row">
+                                <td style="font-weight: bold; border-top: 2px solid #000; border-bottom: 2px solid #000; padding-top: 15px;">Autoliquidación</td>
+                                <td style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding-top: 15px;"></td>
+                                <td style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding-top: 15px;"></td>
+                            </tr>
+                            <tr>
+                                <td>27. Total cuota tributaria del período</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-v-total-cuota-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>28. Excedente de crédito fiscal para el mes siguiente</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-v-excedente-mes-siguiente-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>29. Impuesto pagado en declaración(es) sustituida(s)</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-impuesto-pagado-sustituida-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>30. Retenciones descontadas en declaración(es) sustituida(s)</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-v-retenciones-sustituida-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>31. Percepciones descontadas en declaración(es) sustituida(s)</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-v-percepciones-sustituida-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-subtotal-row">
+                                <td style="font-weight: bold;">32. Sub-total impuesto a pagar</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-v-subtotal-impuesto-art72" style="font-weight: bold;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>33. Retenciones Acumuladas por descontar</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-retenciones-acumuladas-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>34. Retenciones del Periodo</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono text-success" id="f30-retenciones-periodo-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>35. Créditos adquiridos por cesión de retenciones</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-retenciones-cesiones-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>36. Recuperación de retenciones solicitado</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-retenciones-recuperaciones-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-subtotal-row">
+                                <td style="font-weight: bold;">37. Total retenciones</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono text-success" id="f30-total-retenciones-art72" style="font-weight: bold;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>38. Retenciones soportadas descontadas en esta declaración</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono text-success" id="f30-retenciones-descontadas-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>39. Saldo de retenciones de IVA no aplicado</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono text-success" id="f30-retenciones-saldo-no-aplicado-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-subtotal-row">
+                                <td style="font-weight: bold;">40. Sub-total impuesto a pagar</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-subtotal-impuesto-despues-retenciones-art72" style="font-weight: bold;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>41. Percepciones Acumuladas en importaciones por descontar</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-percepciones-acumuladas-import-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>42. Percepciones del periodo</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-percepciones-periodo-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>43. Créditos adquiridos por cesión de percepciones</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-percepciones-cesiones-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>44. Recuperación de percepciones solicitado</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-percepciones-recuperacion-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-subtotal-row">
+                                <td style="font-weight: bold;">45. Total percepciones</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-total-percepciones-art72" style="font-weight: bold;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>46. Percepciones en aduanas descontadas en esta declaración</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-percepciones-descontadas-art72">0,00</td>
+                            </tr>
+                            <tr>
+                                <td>47. Saldo de percepciones en Aduanas no aplicado</td>
+                                <td class="text-right font-mono">-</td>
+                                <td class="text-right font-mono" id="f30-percepciones-saldo-no-aplicado-art72">0,00</td>
+                            </tr>
+                            <tr class="art72-section-end-row">
+                                <td style="font-weight: bold; border-bottom: 2px solid #000;">48. Total a pagar</td>
+                                <td class="text-right font-mono" style="border-bottom: 2px solid #000;">-</td>
+                                <td class="text-right font-mono font-semibold" id="f30-total-pagar-final-art72" style="font-weight: bold; border-bottom: 2px solid #000;">0,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="art72-footer-signatures">
+                        <div class="art72-signature-box">
+                            <div class="art72-signature-line"></div>
+                            <span>Firma Autorizada del Contribuyente</span>
+                        </div>
+                        <div class="art72-stamp-box">
+                            <div class="art72-stamp-line"></div>
+                            <span>Sello del Contribuyente o Portal</span>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: BENEFICIARIOS                       -->
+            <!-- ============================================ -->
+            <section id="beneficiarios-section" class="content-section">
+                
+                <div class="filters-bar">
+                    <div class="filters-group">
+                        <div class="input-group">
+                            <input type="text" id="buscar-beneficiarios" class="input-control u-style-18" placeholder="Buscar por Nombre o RIF...">
+                        </div>
+                    </div>
+                    <button onclick="abrirModalBeneficiario()" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nuevo Beneficiario
+                    </button>
+                </div>
+
+                <div class="card u-style-15">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>R.I.F.</th>
+                                    <th>Razón Social / Nombre</th>
+                                    <th>Tipo de Contribuyente</th>
+                                    <th class="text-right">Retenciones Acumuladas</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-beneficiarios-body">
+                                <!-- Cargado por app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: CONFIGURACIONES                    -->
+            <!-- ============================================ -->
+            <section id="configuracion-section" class="content-section">
+                
+                <div class="settings-grid u-style-56">
+                    
+                    <!-- Gestión de Archivos y Base de Datos -->
+                    <div class="settings-card">
+                        <h3>Mantenimiento y Respaldo</h3>
+                        <p class="u-style-57">
+                            Administra la base de datos de compras, ventas y contactos guardada en el navegador o en tu archivo portable.
+                        </p>
+                        
+                        <div class="flex gap-16 u-style-58">
+                            <button id="btn-exportar-json" class="btn btn-secondary u-style-59">
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Exportar Respaldo JSON
+                            </button>
+                            <button id="btn-importar-json" class="btn btn-secondary u-style-59">
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                Importar Respaldo JSON
+                            </button>
+                            <!-- Input File Oculto para la importación -->
+                            <input class="u-style-4" type="file" id="input-file-importar" accept=".json">
+                        </div>
+
+                        <div class="u-style-60">
+                            <h4 class="u-style-61">Exportación Excel de Libros Fiscales</h4>
+                            <div class="flex gap-16">
+                                <button id="btn-csv-compras" class="btn btn-success u-style-62">
+                                    Descargar Libro Compras (CSV)
+                                </button>
+                                <button id="btn-csv-ventas" class="btn btn-danger u-style-62">
+                                    Descargar Libro Ventas (CSV)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="u-style-63">
+                            <h4 class="u-style-64">Zonas de Control Crítico</h4>
+                            <div class="flex gap-16">
+                                <button id="btn-cargar-demo" class="btn btn-secondary u-style-62">
+                                    Cargar Datos Demo Venezuela
+                                </button>
+                                <button id="btn-limpiar-datos" class="btn btn-danger u-style-62">
+                                    Borrar Todo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: LIBRO DIARIO                        -->
+            <!-- ============================================ -->
+            <section id="diario-section" class="content-section">
+                
+                <div class="filters-bar">
+                    <div class="filters-group">
+                        <div class="input-group">
+                            <input type="text" id="buscar-diario" class="input-control" style="min-width: 250px;" placeholder="Buscar por concepto o cuenta...">
+                        </div>
+                        <div class="input-group">
+                            <input type="month" id="filtro-mes-diario" class="input-control">
+                        </div>
+                        <div class="input-group">
+                            <select id="filtro-periodo-diario" class="input-control">
+                                <option value="completo">Mes Completo</option>
+                                <option value="q1">1ra Quincena (Días 1-15)</option>
+                                <option value="q2">2da Quincena (Días 16+)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex gap-8" style="flex-wrap: wrap;">
+                        <button id="btn-consolidado-diario" class="btn btn-secondary" onclick="window.toggleVistaConsolidadaDiario()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                            <span id="btn-consolidado-diario-texto">Ver Resumen Agrupado</span>
+                        </button>
+                        <button onclick="abrirModalCatalogoCuentas()" class="btn btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            Catálogo de Cuentas
+                        </button>
+                        <button onclick="abrirModalAsientoManual()" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Nuevo Asiento Manual
+                        </button>
+                        <button id="btn-imprimir-libro-diario" class="btn btn-secondary" onclick="imprimirLibroDiario()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><polygon points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                            Imprimir Diario
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card u-style-15" id="card-diario-detallado" style="margin-top: 16px;">
+                    <div class="table-container">
+                        <table class="data-table" id="tabla-libro-diario" style="font-size:0.85rem;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Fecha</th>
+                                    <th style="width: 150px;">Asiento / Origen</th>
+                                    <th style="width: 150px;">Cuenta Contable</th>
+                                    <th>Concepto / Explicación</th>
+                                    <th class="text-right" style="width: 130px;">Debe (Bs.)</th>
+                                    <th class="text-right" style="width: 130px;">Haber (Bs.)</th>
+                                    <th style="width: 80px; text-align: center;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-diario-body">
+                                <!-- Cargado por app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card u-style-15" id="card-diario-consolidado" style="margin-top: 16px; display: none;">
+                    <div class="table-container">
+                        <table class="data-table" id="tabla-libro-diario-consolidado" style="font-size:0.85rem;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 180px;">Código Cuenta</th>
+                                    <th>Cuenta Contable</th>
+                                    <th class="text-right" style="width: 180px;">Total Debe (Bs.)</th>
+                                    <th class="text-right" style="width: 180px;">Total Haber (Bs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-diario-consolidado-body">
+                                <!-- Cargado por app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: LIBRO MAYOR                         -->
+            <!-- ============================================ -->
+            <section id="mayor-section" class="content-section">
+                
+                <div class="filters-bar">
+                    <div class="filters-group">
+                        <div class="input-group" style="min-width: 250px;">
+                            <label for="filtro-cuenta-mayor">Cuenta Contable</label>
+                            <select id="filtro-cuenta-mayor" class="input-control" onchange="filtrarLibroMayor()">
+                                <!-- Cargado dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="filtro-mes-mayor">Período Fiscal</label>
+                            <input type="month" id="filtro-mes-mayor" class="input-control" onchange="filtrarLibroMayor()">
+                        </div>
+                        <div class="input-group">
+                            <label for="filtro-periodo-mayor">Quincena / Mes</label>
+                            <select id="filtro-periodo-mayor" class="input-control" onchange="filtrarLibroMayor()">
+                                <option value="completo">Mes Completo</option>
+                                <option value="q1">1ra Quincena (Días 1-15)</option>
+                                <option value="q2">2da Quincena (Días 16+)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="btn-imprimir-libro-mayor" class="btn btn-secondary" onclick="imprimirLibroMayor()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><polygon points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                        Imprimir Mayor
+                    </button>
+                </div>
+
+                <div class="card u-style-15" style="margin-top: 16px;">
+                    <div class="table-container">
+                        <table class="data-table" id="tabla-libro-mayor" style="font-size:0.85rem;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 110px;">Fecha</th>
+                                    <th style="width: 180px;">Cuenta Contable</th>
+                                    <th>Concepto / Explicación</th>
+                                    <th class="text-right" style="width: 130px;">Debe (Bs.)</th>
+                                    <th class="text-right" style="width: 130px;">Haber (Bs.)</th>
+                                    <th class="text-right" style="width: 150px;">Saldo Acumulado (Bs.)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-mayor-body">
+                                <!-- Cargado por app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ============================================ -->
+            <!-- SECCIÓN: LIBRO DE INVENTARIO Y BALANCES       -->
+            <!-- ============================================ -->
+            <section id="balances-section" class="content-section">
+                
+                <!-- VISTA 1: HISTORIAL DE BLOQUES (LISTADO GENERAL) -->
+                <div id="balance-historial-container">
+                    <div class="filters-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">Historial de Bloques de Inventario y Balances</h3>
+                        <button onclick="abrirModalGenerarBalance()" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Generar Nuevo Bloque
+                        </button>
+                    </div>
+
+                    <!-- CONTENEDOR DE CONTROL SI NO HAY BLOQUES -->
+                    <div id="balance-vacio-aviso" class="card text-center text-muted" style="padding: 60px 20px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin: 0 auto 16px; opacity: 0.5;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <h3>No se ha generado ningún bloque de Inventario y Balance</h3>
+                        <p style="margin-top: 8px; font-size: 0.9rem;">Debe registrar el "Inventario Inicial" (al iniciar operaciones) o un "Cierre de Ejercicio" (anual o mensual) para previsualizar el libro.</p>
+                        <button onclick="abrirModalGenerarBalance()" class="btn btn-primary" style="margin-top: 20px; margin-left: auto; margin-right: auto;">
+                            Generar Primer Bloque
+                        </button>
+                    </div>
+
+                    <!-- TABLA DE HISTORIAL DE BLOQUES -->
+                    <div id="balance-historial-tabla-container" class="card u-style-15" style="display: none;">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Hito del Bloque</th>
+                                        <th>Fecha de Asentamiento</th>
+                                        <th>Notas / Observaciones</th>
+                                        <th class="text-center" style="width: 180px;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="balance-historial-tabla-body">
+                                    <!-- Cargado dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VISTA 2: VISOR DEL BLOQUE SELECCIONADO (DETALLE COMPLETO) -->
+                <div id="balance-visor-container" style="display: none;">
+                    
+                    <div class="filters-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div class="flex gap-8" style="align-items: center;">
+                            <button onclick="volverAlHistorialBalances()" class="btn btn-secondary" style="padding: 8px 12px; display: inline-flex; align-items: center; gap: 4px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                                Volver al Historial
+                            </button>
+                            <span style="color: var(--text-muted); margin: 0 8px;">|</span>
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <select id="select-balance-historico" class="input-control" onchange="cargarBloqueSeleccionado()" style="max-width: 250px;">
+                                    <!-- Cargado dinámicamente -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex gap-8" style="flex-wrap: wrap;">
+                            <button id="btn-eliminar-balance-bloque" class="btn btn-danger" onclick="eliminarBloqueSeleccionado()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><path d="M19 7l-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16"/></svg>
+                                Eliminar Bloque
+                            </button>
+                            <button id="btn-imprimir-balance" class="btn btn-secondary" onclick="imprimirLibroInventarioYBalances()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;"><polygon points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                                Imprimir PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SELECTOR DE VISTAS DE PREVISUALIZACIÓN EN WEB -->
+                    <div id="balance-tabs-container" style="display:none; gap:8px; margin-top:8px; margin-bottom:8px; flex-wrap: wrap;">
+                        <button class="btn btn-primary" id="btn-tab-bal-inventario" onclick="switchBalancesTab('inventario')">
+                            1. Cuerpo de Inventario (Detalle)
+                        </button>
+                        <button class="btn btn-secondary" id="btn-tab-bal-general" onclick="switchBalancesTab('general')">
+                            2. Balance General
+                        </button>
+                        <button class="btn btn-secondary" id="btn-tab-bal-resultados" onclick="switchBalancesTab('resultados')">
+                            3. Estado de Resultados
+                        </button>
+                    </div>
+
+                    <!-- VISTA IMPRIMIBLE Y PREVISUALIZADOR DEL BLOQUE SELECCIONADO -->
+                    <div id="balance-bloque-visor" class="seniat-form-layout" style="display:none; padding: 35px; margin-top: 10px; border: 2px solid #000; background-color: #fff; color: #000;">
+                        
+                        <!-- ENCABEZADO INSTITUCIONAL -->
+                        <div class="seniat-header-container" style="border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: stretch;">
+                            <div class="seniat-header-left" style="width: 50%; display: flex; flex-direction: column; font-family: Arial, sans-serif; font-size: 0.65rem; color: #000; line-height: 1.3;">
+                                <div class="seniat-country" style="font-weight: 800; font-size: 0.75rem;">REPÚBLICA BOLIVARIANA DE VENEZUELA</div>
+                                <div style="font-weight: bold; margin-top: 2px;" id="lbl-empresa-rif">-</div>
+                                <div style="font-weight: bold; text-transform: uppercase;" id="lbl-empresa-nombre">-</div>
+                            </div>
+                            <div class="seniat-header-right" style="width: 50%; text-align: right; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; font-family: Arial, sans-serif;">
+                                <div style="font-size: 1.1rem; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; color: #000;" id="lbl-balance-titulo">LIBRO DE INVENTARIO Y BALANCES</div>
+                                <div style="font-size: 0.75rem; font-weight: bold; color: #1f2937; margin-top: 2px;" id="lbl-balance-fecha-titulo">CIERRE AL -</div>
+                            </div>
+                        </div>
+
+                        <!-- NOTAS EXPLICATIVAS EDITABLES RÁPIDAMENTE -->
+                        <div id="balance-notes-edit-box" class="card" style="background-color: #f9fafb; border: 1px solid #d1d5db; color: #111827; margin-bottom: 20px; padding: 15px; display: block;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                                <label for="txt-balance-notes" style="font-size: 0.8rem; font-weight: 600; color: #374151; margin: 0;">Notas Relatadas para este Bloque (Se guardan automáticamente o presione guardar)</label>
+                                <button onclick="guardarNotasManualmente()" class="btn btn-success" style="padding: 4px 12px; font-size: 0.75rem; border-radius: var(--radius-sm); font-weight: 600; height: 28px; line-height: 1;">
+                                    Guardar Notas
+                                </button>
+                            </div>
+                            <textarea id="txt-balance-notes" class="input-control" style="width: 100%; min-height: 80px; font-family: Arial, sans-serif; resize: vertical; background-color: #fff; border: 1px solid #9ca3af; color: #000;" placeholder="Redacte aquí las notas explicativas de las cuentas y políticas contables..." oninput="guardarNotasAlVuelo()"></textarea>
+                        </div>
+
+                        <!-- ============================================ -->
+                        <!-- TAB 1: CUERPO DE INVENTARIO (DETALLE ANALÍTICO DE 3 COLUMNAS) -->
+                        <!-- ============================================ -->
+                        <div id="tab-content-bal-inventario" class="balance-tab-content">
+                            <h3 style="text-align: center; font-size: 1rem; font-weight: 800; margin-bottom: 15px; border-bottom: 1px solid #000; padding-bottom: 8px; font-family: Arial, sans-serif; color: #000; text-transform: uppercase;">CUERPO DETALLADO DEL INVENTARIO (DETALLE FÍSICO)</h3>
+                            <div class="balance-note-container" id="note-container-inventario" style="display: none;">
+                                <strong>Nota Explicativa:</strong> <span id="lbl-note-inventario"></span>
+                            </div>
+                            <div class="table-container" style="margin-top: 0;">
+                                <table class="data-table" id="tabla-cuerpo-inventario-3col" style="font-family: Arial, sans-serif; color: #000; background-color: #fff; width: 100%; font-size: 0.75rem; border: 1px solid #000; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid #000; background-color: #f1f5f9;">
+                                            <th style="width: 110px; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold; text-align: left;">CÓDIGO CUENTA</th>
+                                            <th style="color: #000; border: 1px solid #000; padding: 6px; font-weight: bold; text-align: left;">DESCRIPCIÓN / DETALLE ANALÍTICO</th>
+                                            <th style="width: 70px; text-align: center; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">CANT.</th>
+                                            <th style="width: 70px; text-align: center; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">U. MEDIDA</th>
+                                            <th style="width: 90px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">COSTO UNIT.</th>
+                                            <th style="width: 115px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">PARCIAL (Bs)</th>
+                                            <th style="width: 115px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">TOTAL CUENTA</th>
+                                            <th style="width: 115px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">TOTAL GRUPO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-cuerpo-inventario-3col-body">
+                                        <!-- Cargado dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- ============================================ -->
+                        <!-- TAB 2: BALANCE GENERAL (ESTADO DE SITUACIÓN) -->
+                        <!-- ============================================ -->
+                        <div id="tab-content-bal-general" class="balance-tab-content" style="display:none;">
+                            <h3 style="text-align: center; font-size: 1rem; font-weight: 800; margin-bottom: 15px; border-bottom: 1px solid #000; padding-bottom: 8px; font-family: Arial, sans-serif; color: #000; text-transform: uppercase;">BALANCE GENERAL (ESTADO DE SITUACIÓN FINANCIERA)</h3>
+                            <div class="balance-note-container" id="note-container-general" style="display: none;">
+                                <strong>Nota Explicativa:</strong> <span id="lbl-note-general"></span>
+                            </div>
+                            <div class="table-container" style="margin-top: 0;">
+                                <table class="data-table" id="tabla-cuerpo-general-3col" style="font-family: Arial, sans-serif; color: #000; background-color: #fff; width: 100%; font-size: 0.75rem; border: 1px solid #000; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid #000; background-color: #f1f5f9;">
+                                            <th style="width: 110px; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold; text-align: left;">CÓDIGO</th>
+                                            <th style="color: #000; border: 1px solid #000; padding: 6px; font-weight: bold; text-align: left;">CUENTA / GRUPO PATRIMONIAL</th>
+                                            <th style="width: 150px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">TOTAL CUENTA (Bs.)</th>
+                                            <th style="width: 150px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">TOTAL GRUPO (Bs.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-cuerpo-general-3col-body">
+                                        <!-- Cargado dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- ============================================ -->
+                        <!-- TAB 3: ESTADO DE RESULTADOS (GANANCIAS Y PÉRDIDAS) -->
+                        <!-- ============================================ -->
+                        <div id="tab-content-bal-resultados" class="balance-tab-content" style="display:none;">
+                            <h3 style="text-align: center; font-size: 1rem; font-weight: 800; margin-bottom: 15px; border-bottom: 1px solid #000; padding-bottom: 8px; font-family: Arial, sans-serif; color: #000; text-transform: uppercase;">ESTADO DE RESULTADOS (RENDIMIENTO ECONÓMICO)</h3>
+                            <div class="balance-note-container" id="note-container-resultados" style="display: none;">
+                                <strong>Nota Explicativa:</strong> <span id="lbl-note-resultados"></span>
+                            </div>
+                            <div class="table-container" style="margin-top: 0;">
+                                <table class="data-table" id="tabla-cuerpo-resultados-3col" style="font-family: Arial, sans-serif; color: #000; background-color: #fff; width: 100%; font-size: 0.75rem; border: 1px solid #000; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid #000; background-color: #f1f5f9;">
+                                            <th style="width: 110px; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold; text-align: left;">CÓDIGO</th>
+                                            <th style="color: #000; border: 1px solid #000; padding: 6px; font-weight: bold; text-align: left;">CUENTA DE RESULTADOS</th>
+                                            <th style="width: 150px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">MONTO CUENTA (Bs.)</th>
+                                            <th style="width: 150px; text-align: right; color: #000; border: 1px solid #000; padding: 6px; font-weight: bold;">TOTAL GRUPO (Bs.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-cuerpo-resultados-3col-body">
+                                        <!-- Cargado dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Las Notas Explicativas ahora se muestran integradas en la parte superior de cada una de las pestañas anteriores -->
+
+                        <!-- CIERRE DE FOLIO Y FIRMAS -->
+                        <div id="balance-firmas-box" style="display: flex; justify-content: space-between; margin-top: 40px; font-family: Arial, sans-serif; color: #000; font-size: 0.75rem; border-top: 1px solid #000; padding-top: 20px;">
+                            <div style="width: 45%; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                                <div style="border-bottom: 1px solid #000; width: 80%; height: 45px;"></div>
+                                <span style="font-weight: bold; margin-top: 6px;" id="lbl-firma-propietario">Propietario / Representante Legal</span>
+                                <span id="lbl-firma-propietario-rif">C.I. / R.I.F.: -</span>
+                            </div>
+                            <div style="width: 45%; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                                <div style="border-bottom: 1px solid #000; width: 80%; height: 45px;"></div>
+                                <span style="font-weight: bold; margin-top: 6px;">Firma del Contador</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: AGREGAR/EDITAR CONTACTO        -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-contacto">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modal-contacto-title">Añadir R.I.F. de Contacto</h3>
+                <button class="modal-close" onclick="cerrarModalContacto()">&times;</button>
+            </div>
+            <form id="form-contacto">
+                <input type="hidden" id="contacto-id">
+                
+                <div class="form-row u-style-65">
+                    <div class="input-group">
+                        <label for="contacto-documento-tipo">Tipo Documento</label>
+                        <select id="contacto-documento-tipo" class="input-control">
+                            <option value="RIF">R.I.F.</option>
+                            <option value="CEDULA">Cédula</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="contacto-tax-id">N° de Registro *</label>
+                        <input type="text" id="contacto-tax-id" class="input-control" placeholder="Ej: J-12345678-9 o V-15678901" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="contacto-type">Tipo de Contacto *</label>
+                        <select id="contacto-type" class="input-control" required>
+                            <option value="cliente">Cliente</option>
+                            <option value="proveedor">Proveedor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row u-style-65">
+                    <div class="input-group">
+                        <label for="contacto-name">Razón Social / Nombre Completo *</label>
+                        <input type="text" id="contacto-name" class="input-control" placeholder="Nombre legal del negocio" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="contacto-especial">¿Es Contribuyente Especial? (Retiene IVA)</label>
+                        <select id="contacto-especial" class="input-control">
+                            <option value="no">No</option>
+                            <option value="si">Sí</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row u-style-65">
+                    <div class="input-group">
+                        <label for="contacto-email">Correo Electrónico</label>
+                        <input type="email" id="contacto-email" class="input-control" placeholder="nombre@proveedor.com">
+                    </div>
+                    <div class="input-group">
+                        <label for="contacto-phone">Número Telefónico</label>
+                        <input type="text" id="contacto-phone" class="input-control" placeholder="Ej: 0412-1234567">
+                    </div>
+                </div>
+
+                <div class="input-group u-style-66">
+                    <label for="contacto-address">Dirección Fiscal</label>
+                    <input type="text" id="contacto-address" class="input-control" placeholder="Dirección completa del negocio">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalContacto()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Contacto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: AGREGAR/EDITAR BENEFICIARIO    -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-beneficiario">
+        <div class="modal-box u-style-67">
+            <div class="modal-header">
+                <h3 id="modal-beneficiario-title">Registrar Beneficiario</h3>
+                <button class="modal-close" onclick="cerrarModalBeneficiario()">&times;</button>
+            </div>
+            <form id="form-beneficiario">
+                <input type="hidden" id="beneficiario-id">
+                
+                <div class="input-group u-style-65">
+                    <label for="beneficiario-name">Razón Social / Nombre Completo *</label>
+                    <input type="text" id="beneficiario-name" class="input-control" required placeholder="Ej: Inversiones ABC C.A.">
+                </div>
+
+                <div class="form-row u-style-65">
+                    <div class="input-group">
+                        <label for="beneficiario-documento-tipo">Tipo Documento</label>
+                        <select id="beneficiario-documento-tipo" class="input-control">
+                            <option value="RIF">R.I.F.</option>
+                            <option value="CEDULA">Cédula</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="beneficiario-tax-id">N° de Registro *</label>
+                        <input type="text" id="beneficiario-tax-id" class="input-control" required placeholder="J-12345678-9">
+                    </div>
+                    <div class="input-group">
+                        <label for="beneficiario-especial">¿Es Contribuyente Especial? *</label>
+                        <select id="beneficiario-especial" class="input-control" required>
+                            <option value="no">No (Contribuyente Ordinario)</option>
+                            <option value="si">Sí (Agente de Retención)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group u-style-66">
+                    <label for="beneficiario-retenciones">Retenciones de IVA Acumuladas (Periodos anteriores - Bs.)</label>
+                    <input type="number" id="beneficiario-retenciones" class="input-control" placeholder="0.00" step="0.01" min="0">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalBeneficiario()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Beneficiario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: AGREGAR/EDITAR COMPRA          -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-compra">
+        <div class="modal-box u-style-68">
+            <div class="modal-header">
+                <h3 id="modal-compra-title">Registrar Factura de Compra</h3>
+                <button class="modal-close" onclick="cerrarModalCompra()">&times;</button>
+            </div>
+            <form id="form-compra">
+                <input type="hidden" id="compra-id">
+                
+                <div class="form-row u-style-69">
+                    <div class="input-group">
+                        <label for="compra-date">Fecha de la Factura *</label>
+                        <input type="date" id="compra-date" class="input-control" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="compra-doc-type">Tipo Documento *</label>
+                        <select id="compra-doc-type" class="input-control" required>
+                            <option value="Factura">Factura Recibida</option>
+                            <option value="Nota Crédito">Nota de Crédito</option>
+                            <option value="Nota Débito">Nota de Débito</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campos de Notas de Crédito / Débito (Condicionales) -->
+                <div class="form-row u-style-70" id="compra-notas-fields">
+                    <div class="input-group u-style-4" id="compra-nota-debito-group">
+                        <label for="compra-nota-debito">N° Nota de Débito</label>
+                        <input type="text" id="compra-nota-debito" class="input-control" placeholder="Ej: ND-0021">
+                    </div>
+                    <div class="input-group u-style-4" id="compra-nota-credito-group">
+                        <label for="compra-nota-credito">N° Nota de Crédito</label>
+                        <input type="text" id="compra-nota-credito" class="input-control" placeholder="Ej: NC-0044">
+                    </div>
+                    <div class="input-group">
+                        <label for="compra-doc-afectado">Factura Afectada *</label>
+                        <select id="compra-doc-afectado" class="input-control">
+                            <!-- Cargado dinámicamente por JS -->
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label id="compra-monto-ajuste-label" for="compra-monto-ajuste">Monto a Ajustar (Bs.) *</label>
+                        <input type="number" id="compra-monto-ajuste" class="input-control" placeholder="0,00" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row u-style-69">
+                    <div class="input-group">
+                        <label for="compra-doc-number">N° de Factura *</label>
+                        <input type="text" id="compra-doc-number" class="input-control" required placeholder="Ej: 14032">
+                    </div>
+                    <div class="input-group">
+                        <label for="compra-control-number">N° de Control de Factura *</label>
+                        <input type="text" id="compra-control-number" class="input-control" required placeholder="Ej: 00-142345">
+                    </div>
+                </div>
+
+                <div class="form-row u-style-69">
+                    <div class="input-group">
+                        <label for="compra-proveedor">Proveedor *</label>
+                        <select id="compra-proveedor" class="input-control" required>
+                            <!-- Cargar dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="compra-territorialidad">Clasificación Operación</label>
+                        <select id="compra-territorialidad" class="input-control">
+                            <option value="nacional">Compra Interna (Nacional)</option>
+                            <option value="importacion">Importación</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campos de Importación (Condicionales) -->
+                <div class="form-row u-style-70" id="compra-import-fields">
+                    <div class="input-group">
+                        <label for="compra-import-expediente">N° Expediente Importación</label>
+                        <input type="text" id="compra-import-expediente" class="input-control" placeholder="Ej: EXP-2026-99">
+                    </div>
+                    <div class="input-group">
+                        <label for="compra-export-form-d">N° Planilla Exportación (Forma D)</label>
+                        <input type="text" id="compra-export-form-d" class="input-control" placeholder="Ej: FORMA-D-1234">
+                    </div>
+                    <div class="input-group">
+                        <label for="compra-iva-percibido-aduana">IVA Percibido por Aduana (Bs.)</label>
+                        <input type="number" id="compra-iva-percibido-aduana" class="input-control" placeholder="0,00" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <!-- Desglose por Alícuotas Venezolanas -->
+                <div class="u-style-71">
+                    <strong class="u-style-72">Detalle de Alícuotas e Impuestos</strong>
+                    
+                    <table class="fiscal-rates-table">
+                        <thead>
+                            <tr>
+                                <th>Alícuota / Impuesto</th>
+                                <th class="u-style-73">Monto Base Imponible (Bs.)</th>
+                                <th class="u-style-74">Monto IVA (Bs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Exento o Exonerado (0%)</td>
+                                <td><input type="number" id="compra-base-exenta" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><span class="text-muted u-style-76">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>Compras sin derecho a Crédito Fiscal</td>
+                                <td><input type="number" id="compra-sin-credito" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><span class="text-muted u-style-76">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>Alícuota General (16%)</td>
+                                <td><input type="number" id="compra-base-general" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><input type="number" id="compra-iva-general" class="input-control u-style-75" placeholder="0,00" step="0.01" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>Alícuota Reducida (8%)</td>
+                                <td><input type="number" id="compra-base-reducida" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><input type="number" id="compra-iva-reducida" class="input-control u-style-75" placeholder="0,00" step="0.01" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>Alícuota Adicional (31%)</td>
+                                <td><input type="number" id="compra-base-adicional" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><input type="number" id="compra-iva-adicional" class="input-control u-style-75" placeholder="0,00" step="0.01" readonly></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-row u-style-69">
+                    <div class="input-group">
+                        <label for="compra-total">Monto Total de la Factura (Bs.)</label>
+                        <input type="number" id="compra-total" class="input-control u-style-77" readonly placeholder="0,00" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="compra-status">Estado de Factura</label>
+                        <select id="compra-status" class="input-control">
+                            <option value="Pagado">Pagado</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Anulado">Anulado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Sección Retención de IVA (SENIAT) -->
+                <div class="u-style-78">
+                    <label class="flex align-center gap-8 u-style-79">
+                        <input class="u-style-80" type="checkbox" id="compra-has-retention">
+                        <span>¿Aplicar Retención de IVA por Contribuyente Especial?</span>
+                    </label>
+                    
+                    <div class="retention-box" id="compra-retention-box">
+                        <div class="form-row u-style-81">
+                            <div class="input-group">
+                                <label for="compra-retention-pct">Porcentaje de Retención</label>
+                                <select id="compra-retention-pct" class="input-control">
+                                    <option value="75">75% (General)</option>
+                                    <option value="100">100% (Casos especiales / exenciones)</option>
+                                    <option value="otro">Otro porcentaje</option>
+                                </select>
+                            </div>
+                            <div class="input-group u-style-4" id="compra-ret-pct-custom-group">
+                                <label for="compra-retention-pct-custom">Especificar %</label>
+                                <input type="number" id="compra-retention-pct-custom" class="input-control" placeholder="%" min="0" max="100" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label for="compra-retention-amount">Monto de IVA Retenido (Bs.)</label>
+                                <input type="number" id="compra-retention-amount" class="input-control" placeholder="0,00" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="compra-retention-number">N° Comprobante de Retención</label>
+                                <input type="text" id="compra-retention-number" class="input-control" placeholder="Ej: 20260576123456">
+                            </div>
+                            <div class="input-group">
+                                <label for="compra-retention-date">Fecha de Emisión de Retención</label>
+                                <input type="date" id="compra-retention-date" class="input-control">
+                            </div>
+                            <div class="input-group">
+                                <label for="compra-retention-terceros">IVA Retenido a Terceros (Bs.)</label>
+                                <input type="number" id="compra-retencion-terceros" class="input-control" placeholder="0,00" step="0.01" min="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group u-style-65">
+                    <label for="compra-notes">Observaciones Contables</label>
+                    <input type="text" id="compra-notes" class="input-control" placeholder="Ej: Compra de papelería administrativa o descripción del gasto">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalCompra()">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Registrar Compra</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: AGREGAR/EDITAR VENTA           -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-venta">
+        <div class="modal-box u-style-68">
+            <div class="modal-header">
+                <h3 id="modal-venta-title">Registrar Factura de Venta</h3>
+                <button class="modal-close" onclick="cerrarModalVenta()">&times;</button>
+            </div>
+            <form id="form-venta">
+                <input type="hidden" id="venta-id">
+                
+                <div class="form-row u-style-69">
+                    <div class="input-group">
+                        <label for="venta-date">Fecha de la Factura *</label>
+                        <input type="date" id="venta-date" class="input-control" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="venta-doc-type">Tipo Documento *</label>
+                        <select id="venta-doc-type" class="input-control" required>
+                            <option value="Factura">Factura Emitida</option>
+                            <option value="Nota Crédito">Nota de Crédito</option>
+                            <option value="Nota Débito">Nota de Débito</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campos de Notas de Crédito / Débito (Condicionales) -->
+                <div class="form-row u-style-70" id="venta-notas-fields">
+                    <div class="input-group u-style-4" id="venta-nota-debito-group">
+                        <label for="venta-nota-debito">N° Nota de Débito</label>
+                        <input type="text" id="venta-nota-debito" class="input-control" placeholder="Ej: ND-0005">
+                    </div>
+                    <div class="input-group u-style-4" id="venta-nota-credito-group">
+                        <label for="venta-nota-credito">N° Nota de Crédito</label>
+                        <input type="text" id="venta-nota-credito" class="input-control" placeholder="Ej: NC-0010">
+                    </div>
+                    <div class="input-group">
+                        <label for="venta-doc-afectado">Factura Afectada *</label>
+                        <select id="venta-doc-afectado" class="input-control">
+                            <!-- Cargado dinámicamente por JS -->
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label id="venta-monto-ajuste-label" for="venta-monto-ajuste">Monto a Ajustar (Bs.) *</label>
+                        <input type="number" id="venta-monto-ajuste" class="input-control" placeholder="0,00" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row u-style-69" id="venta-normal-invoice-row">
+                    <div class="input-group">
+                        <label for="venta-doc-number">N° de Factura *</label>
+                        <input type="text" id="venta-doc-number" class="input-control" required placeholder="Ej: 00120">
+                    </div>
+                    <div class="input-group">
+                        <label for="venta-control-number">N° de Control de Factura *</label>
+                        <input type="text" id="venta-control-number" class="input-control" required placeholder="Ej: 00-000210">
+                    </div>
+                </div>
+
+                <div class="form-row u-style-69">
+                    <div class="input-group">
+                        <label for="venta-cliente">Cliente *</label>
+                        <select id="venta-cliente" class="input-control" required>
+                            <!-- Cargar dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="venta-territorialidad">Clasificación Operación</label>
+                        <select id="venta-territorialidad" class="input-control">
+                            <option value="nacional">Venta Interna (Nacional)</option>
+                            <option value="exportacion">Exportación</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campos de Exportación (Condicionales) -->
+                <div class="form-row u-style-70" id="venta-export-fields">
+                    <div class="input-group">
+                        <label for="venta-export-form-d">N° Planilla Exportación (Forma D)</label>
+                        <input type="text" id="venta-export-form-d" class="input-control" placeholder="Ej: EXPORT-FORMA-D-772">
+                    </div>
+                </div>
+
+                <!-- Sección Facturación por Máquina Fiscal -->
+                <div class="u-style-78">
+                    <label class="flex align-center gap-8 u-style-79">
+                        <input class="u-style-80" type="checkbox" id="venta-is-fiscal-printer">
+                        <span>¿Venta realizada por Máquina Fiscal?</span>
+                    </label>
+                    
+                    <div class="retention-box" id="venta-fiscal-printer-box">
+                        <div class="form-row" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px;">
+                            <div class="input-group">
+                                <label for="venta-fiscal-machine">Serial Máquina Fiscal</label>
+                                <input type="text" id="venta-fiscal-machine" class="input-control" placeholder="Ej: Z1A123456">
+                            </div>
+                            <div class="input-group">
+                                <label for="venta-control-z">N° de Control Z (Reporte Z)</label>
+                                <input type="text" id="venta-control-z" class="input-control" placeholder="Ej: 0256">
+                            </div>
+                            <div class="input-group">
+                                <label for="venta-fiscal-inicio">INICIO *</label>
+                                <input type="text" id="venta-fiscal-inicio" class="input-control" placeholder="Ej: 530">
+                            </div>
+                            <div class="input-group">
+                                <label for="venta-fiscal-final">FINAL *</label>
+                                <input type="text" id="venta-fiscal-final" class="input-control" placeholder="Ej: 535">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Facturado por Cuenta de Terceros -->
+                <div class="u-style-78">
+                    <label class="flex align-center gap-8 u-style-79">
+                        <input class="u-style-80" type="checkbox" id="venta-is-terceros">
+                        <span>¿Venta facturada por cuenta de terceros?</span>
+                    </label>
+                    
+                    <div class="retention-box" id="venta-terceros-box">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="venta-terceros-total">Total Ventas Facturadas Cuenta Terceros (Bs.)</label>
+                                <input type="number" id="venta-terceros-total" class="input-control" placeholder="0,00" step="0.01" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label for="venta-terceros-exentas">Ventas Exentas Cuenta Terceros (Bs.)</label>
+                                <input type="number" id="venta-terceros-exentas" class="input-control" placeholder="0,00" step="0.01" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label for="venta-terceros-gravadas">Ventas Gravadas Cuenta Terceros (Bs.)</label>
+                                <input type="number" id="venta-terceros-gravadas" class="input-control" placeholder="0,00" step="0.01" min="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desglose por Alícuotas Venezolanas -->
+                <div class="u-style-71">
+                    <strong class="u-style-72">Detalle de Alícuotas e Impuestos</strong>
+                    
+                    <table class="fiscal-rates-table">
+                        <thead>
+                            <tr>
+                                <th>Alícuota / Impuesto</th>
+                                <th class="u-style-73">Monto Base Imponible (Bs.)</th>
+                                <th class="u-style-74">Monto IVA (Bs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Exento o Exonerado (0%)</td>
+                                <td><input type="number" id="venta-base-exenta" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><span class="text-muted u-style-76">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>Alícuota General (16%)</td>
+                                <td><input type="number" id="venta-base-general" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><input type="number" id="venta-iva-general" class="input-control u-style-75" placeholder="0,00" step="0.01" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>Alícuota Reducida (8%)</td>
+                                <td><input type="number" id="venta-base-reducida" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><input type="number" id="venta-iva-reducida" class="input-control u-style-75" placeholder="0,00" step="0.01" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>Alícuota Adicional (31%)</td>
+                                <td><input type="number" id="venta-base-adicional" class="input-control u-style-75" placeholder="0,00" step="0.01" min="0"></td>
+                                <td><input type="number" id="venta-iva-adicional" class="input-control u-style-75" placeholder="0,00" step="0.01" readonly></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-row u-style-69">
+                    <div class="input-group">
+                        <label for="venta-total">Monto Total de la Factura (Bs.)</label>
+                        <input type="number" id="venta-total" class="input-control u-style-77" readonly placeholder="0,00" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="venta-status">Estado de Factura</label>
+                        <select id="venta-status" class="input-control">
+                            <option value="Pagado">Pagado</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Anulado">Anulado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Sección Retención de IVA (SENIAT) -->
+                <div class="u-style-78">
+                    <label class="flex align-center gap-8 u-style-79">
+                        <input class="u-style-80" type="checkbox" id="venta-has-retention">
+                        <span>¿El Cliente aplicó Retención de IVA?</span>
+                    </label>
+                    
+                    <div class="retention-box" id="venta-retention-box">
+                        <div class="form-row u-style-81">
+                            <div class="input-group">
+                                <label for="venta-retention-pct">Porcentaje de Retención</label>
+                                <select id="venta-retention-pct" class="input-control">
+                                    <option value="75">75% (General)</option>
+                                    <option value="100">100% (Casos especiales / exenciones)</option>
+                                    <option value="otro">Otro porcentaje</option>
+                                </select>
+                            </div>
+                            <div class="input-group u-style-4" id="venta-ret-pct-custom-group">
+                                <label for="venta-retention-pct-custom">Especificar %</label>
+                                <input type="number" id="venta-retention-pct-custom" class="input-control" placeholder="%" min="0" max="100" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label for="venta-retention-amount">Monto de IVA Retenido (Bs.)</label>
+                                <input type="number" id="venta-retention-amount" class="input-control" placeholder="0,00" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="venta-retention-number">N° Comprobante de Retención</label>
+                                <input type="text" id="venta-retention-number" class="input-control" placeholder="Ej: 20260505102030">
+                            </div>
+                            <div class="input-group">
+                                <label for="venta-retention-date">Fecha de Emisión de Retención</label>
+                                <input type="date" id="venta-retention-date" class="input-control">
+                            </div>
+                        </div>
+                        <div class="form-row u-style-82">
+                            <div class="input-group">
+                                <label for="venta-iva-percibido-comprador">IVA Percibido por el Comprador (Bs.)</label>
+                                <input type="number" id="venta-iva-percibido-comprador" class="input-control" placeholder="0,00" step="0.01" min="0">
+                            </div>
+                            <div class="input-group u-style-83">
+                                <!-- Relleno grid -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group u-style-65">
+                    <label for="venta-notes">Observaciones Contables</label>
+                    <input type="text" id="venta-notes" class="input-control" placeholder="Ej: Venta de productos terminados o descripción del servicio">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalVenta()">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Registrar Venta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: AGREGAR/EDITAR ARTICULO       -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-articulo">
+        <div class="modal-box u-style-68">
+            <div class="modal-header">
+                <h3 id="modal-articulo-title">Registrar Material / Producto</h3>
+                <button class="modal-close" onclick="cerrarModalArticulo()">&times;</button>
+            </div>
+            <form id="form-articulo">
+                <input type="hidden" id="articulo-id">
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="articulo-code">Código del Material *</label>
+                        <input type="text" id="articulo-code" class="input-control" required placeholder="Ej: MAT-001">
+                    </div>
+                    <div class="input-group">
+                        <label for="articulo-unit">Unidad de Medida *</label>
+                        <select id="articulo-unit" class="input-control" required>
+                            <option value="Unidad">Unidad (ud)</option>
+                            <option value="Kg">Kilogramo (Kg)</option>
+                            <option value="Litro">Litro (L)</option>
+                            <option value="Metro">Metro (m)</option>
+                            <option value="Paquete">Paquete</option>
+                            <option value="Caja">Caja</option>
+                            <option value="Saco">Saco</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group u-style-65" style="margin-top:16px;">
+                    <label for="articulo-description">Descripción detallada del Material *</label>
+                    <input type="text" id="articulo-description" class="input-control" required placeholder="Ej: Lámina de acero galvanizado 2mm">
+                </div>
+
+                <div class="form-row" style="margin-top:16px;">
+                    <div class="input-group">
+                        <label for="articulo-initial-stock">Existencia Inicial (Stock Inicial)</label>
+                        <input type="number" id="articulo-initial-stock" class="input-control" placeholder="0.00" value="0" step="any" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="articulo-initial-cost">Costo Unitario Inicial (Bs.)</label>
+                        <input type="number" id="articulo-initial-cost" class="input-control" placeholder="0.00" value="0" step="any" min="0">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalArticulo()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Artículo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: REGISTRAR ENTRADA / SALIDA    -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-movimiento">
+        <div class="modal-box u-style-68">
+            <div class="modal-header">
+                <h3 id="modal-movimiento-title">Registrar Movimiento de Inventario</h3>
+                <button class="modal-close" onclick="cerrarModalMovimiento()">&times;</button>
+            </div>
+            <form id="form-movimiento">
+                <input type="hidden" id="movimiento-id">
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="movimiento-articulo">Material / Producto *</label>
+                        <select id="movimiento-articulo" class="input-control" required>
+                            <!-- Cargado dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="movimiento-date">Fecha del Movimiento *</label>
+                        <input type="date" id="movimiento-date" class="input-control" required>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top:16px;">
+                    <div class="input-group">
+                        <label for="movimiento-type">Tipo de Operación *</label>
+                        <select id="movimiento-type" class="input-control" required onchange="actualizarSugerenciaCostoMovimiento()">
+                            <option value="Entrada">Entrada (Compra / Devolución / Ingreso)</option>
+                            <option value="Salida">Salida (Venta / Despacho / Consumo)</option>
+                            <option value="Ajuste+">Ajuste Positivo (+)</option>
+                            <option value="Ajuste-">Ajuste Negativo (Pérdida / Merma / -)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="movimiento-doc-type">Documento de Soporte *</label>
+                        <select id="movimiento-doc-type" class="input-control" required>
+                            <option value="Factura">Factura</option>
+                            <option value="Guía de Despacho">Guía de Despacho</option>
+                            <option value="Nota de Entrega">Nota de Entrega</option>
+                            <option value="Ajuste Interno">Ajuste Interno</option>
+                            <option value="Inventario Inicial">Inventario Inicial</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top:16px;">
+                    <div class="input-group">
+                        <label for="movimiento-doc-number">N° de Documento *</label>
+                        <input type="text" id="movimiento-doc-number" class="input-control" required placeholder="Ej: F-00234">
+                    </div>
+                    <div class="input-group">
+                        <label for="movimiento-qty">Cantidad *</label>
+                        <input type="number" id="movimiento-qty" class="input-control" required placeholder="0.00" step="any" min="0.0001">
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top:16px;">
+                    <div class="input-group">
+                        <label for="movimiento-unit-cost" id="label-costo-movimiento">Costo Unitario (Bs.) *</label>
+                        <input type="number" id="movimiento-unit-cost" class="input-control" required placeholder="0.00" step="any" min="0">
+                        <small id="sugerencia-costo-promedio" class="text-muted" style="display:none; font-size:0.75rem; margin-top:2px;"></small>
+                    </div>
+                    <div class="input-group">
+                        <!-- Espaciado -->
+                    </div>
+                </div>
+
+                <div class="input-group u-style-65" style="margin-top:16px;">
+                    <label for="movimiento-notes">Detalle / Concepto del Movimiento</label>
+                    <input type="text" id="movimiento-notes" class="input-control" placeholder="Ej: Compra según factura J-12345 o Ajuste por merma en almacén">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalMovimiento()">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Registrar Movimiento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: REGISTRAR ASIENTO MANUAL      -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-asiento-manual">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modal-asiento-manual-title">Registrar Asiento Contable Manual</h3>
+                <button class="modal-close" onclick="cerrarModalAsientoManual()">&times;</button>
+            </div>
+            <form id="form-asiento-manual">
+                <input type="hidden" id="asiento-id">
+                
+                <div class="form-row u-style-65">
+                    <div class="input-group">
+                        <label for="asiento-date">Fecha del Asiento *</label>
+                        <input type="date" id="asiento-date" class="input-control" required>
+                    </div>
+                </div>
+
+                <div class="input-group u-style-66">
+                    <label for="asiento-concept">Concepto / Explicación *</label>
+                    <input type="text" id="asiento-concept" class="input-control" placeholder="Ej: Pago de impuestos SENIAT o Pago de Nómina" required>
+                </div>
+
+                <div class="form-row u-style-65" style="border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-md); margin-top: 12px; background: rgba(255,255,255,0.02); display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="input-group">
+                        <label for="asiento-cuenta-debe" style="color: var(--color-success); font-weight: 600;">Cuenta Cargo (Debe) *</label>
+                        <select id="asiento-cuenta-debe" class="input-control" style="width: 100%;" required>
+                            <!-- Cargado dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="asiento-cuenta-haber" style="color: var(--color-danger); font-weight: 600;">Cuenta Abono (Haber) *</label>
+                        <select id="asiento-cuenta-haber" class="input-control" style="width: 100%;" required>
+                            <!-- Cargado dinámicamente -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row u-style-65" style="margin-top: 12px;">
+                    <div class="input-group">
+                        <label for="asiento-monto">Monto (Bs.) *</label>
+                        <input type="number" id="asiento-monto" class="input-control" placeholder="0,00" step="0.01" min="0.01" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalAsientoManual()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Registrar Asiento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: GESTIONAR CATÁLOGO DE CUENTAS -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-catalogo-cuentas">
+        <div class="modal-box" style="max-width: 650px; display: flex; flex-direction: column; max-height: 90vh;">
+            <div class="modal-header">
+                <h3>Gestionar Catálogo de Cuentas Contables</h3>
+                <button class="modal-close" onclick="cerrarModalCatalogoCuentas()">&times;</button>
+            </div>
+            
+            <!-- FORMULARIO DE NUEVA CUENTA -->
+            <form id="form-catalogo-nueva-cuenta" onsubmit="guardarNuevaCuenta(event)" style="border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+                <input type="hidden" id="catalogo-cuenta-original-codigo">
+                <h4 id="catalogo-form-title" style="margin-bottom: 12px; color: var(--color-primary);">Registrar Nueva Cuenta Contable</h4>
+                <div class="form-row u-style-65" style="display: flex; gap: 12px; margin-bottom: 0;">
+                    <div class="input-group" style="flex: 0 0 150px;">
+                        <label for="catalogo-cuenta-codigo">Código *</label>
+                        <input type="text" id="catalogo-cuenta-codigo" class="input-control" placeholder="Ej: 1.1.05" required>
+                    </div>
+                    <div class="input-group" style="flex: 1;">
+                        <label for="catalogo-cuenta-nombre">Nombre de la Cuenta *</label>
+                        <input type="text" id="catalogo-cuenta-nombre" class="input-control" placeholder="Ej: Caja Chica de Operaciones" required>
+                    </div>
+                    <div class="input-group" style="flex: 0 0 120px; align-self: flex-end;">
+                        <button type="submit" id="btn-catalogo-guardar" class="btn btn-primary" style="width: 100%; height: 42px;">Guardar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- BUSCADOR INTERACTIVO Y TABLA -->
+            <div style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <input type="text" id="buscar-catalogo-cuentas" class="input-control" placeholder="Filtrar cuentas por código o nombre..." oninput="filtrarCatalogoCuentas()">
+                </div>
+                <div class="table-container" style="flex: 1; overflow-y: auto; max-height: 300px; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                    <table class="data-table" style="font-size: 0.85rem; width: 100%;">
+                        <thead>
+                            <tr style="position: sticky; top: 0; background: var(--bg-card); z-index: 10;">
+                                <th style="width: 120px;">Código</th>
+                                <th>Nombre</th>
+                                <th style="width: 100px; text-align: center;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-catalogo-cuentas-body">
+                            <!-- Poblado dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="modal-footer" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px;">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalCatalogoCuentas()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VENTANA MODAL: GENERAR NUEVO BLOQUE BALANCE   -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modal-generar-balance">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Asentar Bloque de Inventario y Balance</h3>
+                <button class="modal-close" onclick="cerrarModalGenerarBalance()">&times;</button>
+            </div>
+            <form id="form-generar-balance" onsubmit="guardarNuevoBloque(event)">
+                <div class="form-row u-style-65">
+                    <div class="input-group">
+                        <label for="balance-tipo">Hito del Bloque *</label>
+                        <select id="balance-tipo" class="input-control" required>
+                            <option value="Inventario Inicial">Inventario Inicial (Apertura)</option>
+                            <option value="Cierre de Ejercicio">Cierre de Ejercicio (Cierre Anual)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="balance-fecha">Fecha de Asentamiento *</label>
+                        <input type="date" id="balance-fecha" class="input-control" required>
+                    </div>
+                </div>
+                <div class="form-row u-style-65" style="margin-top: 16px;">
+                    <div class="input-group" style="grid-column: span 2;">
+                        <label for="balance-notas-input">Notas / Observaciones Iniciales</label>
+                        <textarea id="balance-notas-input" class="input-control" style="min-height: 80px; resize: vertical;" placeholder="Opcional: detalles del balance de apertura o del cierre fiscal..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer" style="margin-top: 24px;">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalGenerarBalance()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Asentar y Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR DE TOASTS -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Script de la Aplicación -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
