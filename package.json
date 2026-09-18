@@ -1,0 +1,58 @@
+{
+  "name": "libro-fiscal-seniat",
+  "version": "1.0.0",
+  "description": "Sistema de Libro Fiscal y Declaración Forma 30 SENIAT con Electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test_logic.js",
+    "obfuscate": "node obfuscate.js --backup",
+    "restore": "node obfuscate.js --restore",
+    "dist": "node obfuscate.js --build"
+  },
+  "keywords": [
+    "electron",
+    "seniat",
+    "libro-fiscal",
+    "venezuela"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^42.2.0",
+    "electron-builder": "^26.15.0",
+    "javascript-obfuscator": "^5.4.3"
+  },
+  "build": {
+    "appId": "com.libro.fiscal.seniat",
+    "productName": "Libro Fiscal SENIAT",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "libro/assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Libro Fiscal SENIAT",
+      "include": "installer.nsh"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "libro/**/*",
+      "node_modules/**/*",
+      "!libro/libro_fiscal.sqlite"
+    ],
+    "asar": true,
+    "electronFuses": {
+      "enableEmbeddedAsarIntegrityValidation": false
+    }
+  }
+}
